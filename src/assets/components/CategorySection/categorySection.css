@@ -1,0 +1,34 @@
+.bestseller-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  
+    
+    /* width: 100vw; */
+    /* height: 30vw; */
+    /* background-color: aqua; */
+    
+}
+
+.bestseller-container h2{
+    font-size: 1.5vw;
+    color: rgb(105, 105, 105);
+}
+
+.bestseller{
+    /* background-color: tomato; */
+    display: flex;
+    justify-content: space-evenly;
+    margin: 5vw;
+
+}
+
+
+
+.bestseller .rightColumn{
+  flex: 1;    
+}
+
+.bestseller .leftColumn{
+    flex: 1.2;    
+  }
