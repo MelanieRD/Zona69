@@ -1,60 +1,75 @@
+*, ::before, ::after{
+    box-sizing: border-box;
+}
 .carousel-container{
+    position: relative;
     width: 100vw;
     height: 60vh;
     background-color: rgb(230, 230, 230);
-   
-   
-}
-
-.carousel-center{
-    display: flex;
-    counter-reset:sectionImg;
-    
-    scroll-behavior: smooth;
-    scroll-snap-type: mandatory;
-    overflow-x: scroll;
-    overflow-y: hidden;
-
-}
-.carousel-item::before{
-    counter-increment: sectionImg;
-    content: counter(sectionImg);
-   
-    /* transition: 0.5s; */
-    /* content: counter(sectionImg);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 5em;
-    color: white;
-    text-shadow: 0 0 5px black; */
-}
-
-.carousel-item{
-    height: 60vh;
-    
-
-}
-
-.carousel-item img{
-    width: 100vw;
-    height: 60vw;
-
 }
 
 
 .carousel{
-    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    
+
 }
+
+.carousel-img-container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    transition: translate 500ms ease-in-out;
+}
+
+/* middle buttons */
+.carousel-middle-buttons{
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0;
+    translate: 50vw;
+
+    display: flex;
+    gap: 0.5rem;
+
+}
+
+
+.dot-button{
+    all: unset;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+    transition: 0.5s;
+    border: solid 0.1rem rgb(255, 255, 255);
+    /* box-shadow: 0 0 0.1rem 0.1rem rgb(56, 53, 53); */
+    
+    
+    border-radius: 100%;
+    opacity: 0.5;
+
+
+}
+
+
+.dot-button:hover{
+scale: 1.2;
+}
+
 
 
 /* INFO */
 .carousel-info-container{
+    position: absolute;
+    translate: 10vw;
+    bottom: 10rem;
+    left: 0;    
+   }
+   
+.info{
     display: flex;
     flex-direction: column;
     width: 40vw;

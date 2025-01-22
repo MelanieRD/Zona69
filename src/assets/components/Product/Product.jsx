@@ -8,24 +8,22 @@ export const Product = ({addClass, productName, productDesc, productPrice, imgSr
 
 
     return (
-        <div className={`product-container ${addClass}`} >
+        <div style={{position: "relative"}}>
+            <div className={`product-container ${addClass}`} >
+                <div className="product-image">
+                        <img src={imgSrc} alt="product" />
+                    {hideHeartIcon?  "" : <HiHeart className="icon-product"/>}
+                </div>
 
-            <div className="product-image">
-                <img src={imgSrc} alt="product" />
-               {hideHeartIcon?  "" : <HiHeart className="icon-product"/>}
+                <div className="product-info">
+                        <h3>{productName}</h3>
+                        <p>{productDesc}</p>
+                        <p>{productPrice}</p>
+                            {/* <Button text={buttonTxt} />  */}
+                </div>
+                
+        
             </div>
-            <div className="product-info">
-                <h3>{productName}</h3>
-                <p>{productDesc}</p>
-                <p>{productPrice}</p>
-
-                     <Button text={buttonTxt} />
-                    
-
-               
-            </div>
-            
-       
         </div>
     )
 }

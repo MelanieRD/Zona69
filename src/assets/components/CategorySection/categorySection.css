@@ -1,34 +1,26 @@
-.bestseller-container{
+
+.categories-container{
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin-top: 5vw;
   
     
     /* width: 100vw; */
     /* height: 30vw; */
-    /* background-color: aqua; */
+    /* background-color: aqua;  */
     
 }
 
-.bestseller-container h2{
-    font-size: 1.5vw;
-    color: rgb(105, 105, 105);
-}
 
-.bestseller{
+.categories{
     /* background-color: tomato; */
     display: flex;
-    justify-content: space-evenly;
-    margin: 5vw;
-
+    justify-content: center;
+    /* background-color: rgb(127, 172, 255); */
 }
 
 
 
-.bestseller .rightColumn{
-  flex: 1;    
-}
 
-.bestseller .leftColumn{
-    flex: 1.2;    
-  }
+
