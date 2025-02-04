@@ -17,6 +17,11 @@ app.use(express.json());
 const router = require("./routes/index.js");
 app.use("/app", router);
 
+/*
 app.listen(PORT, ()=>{
     console.log("Hi, :D listening server on port: ", PORT);
-})
+})*/
+
+app.get("/", (req, res) => {
+    res.send("API funcionando en Vercel 🚀");
+  });
