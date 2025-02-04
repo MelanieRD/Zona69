@@ -25,3 +25,5 @@ app.listen(PORT, ()=>{
 app.get("/", (req, res) => {
     res.send("API funcionando en Vercel 🚀");
   });
+
+  module.exports = app;
