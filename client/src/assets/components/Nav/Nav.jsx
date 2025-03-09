@@ -10,14 +10,13 @@ export const Nav = () =>{
     return (
         <div className="nav-container">
         <nav>
-            <img src="logo" alt="LOGO" />
+            
+            <ul></ul>
             
             <ul className="nav-center">
                 <li><Link to="/">Home</Link></li>
-               
-                <li><Link to="/shop">Shop</Link></li>
-                <li><a>About us</a></li>
-               
+                 <li><a>Zona 69</a></li>
+                <li><Link to="/shop">Shop</Link></li>    
             </ul>
 
              <ul className="nav-right">

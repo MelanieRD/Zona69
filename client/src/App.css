@@ -2,5 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: system-ui, 'Segoe UI';
+    font-family: Lab Grotesque, Helvetica, Arial, sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
 }
