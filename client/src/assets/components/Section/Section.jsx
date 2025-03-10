@@ -22,7 +22,7 @@ export const Section = () =>{
                 <ProductCard imgSrc={"/img/home/expertguides.jpg"}/>
                 <ProductCard imgSrc={"/img/high-angle-condoms-wrappers-yellow-background.jpg"}/>
             </div>
-
+            {/* holaa */}
 
             <div className="image-section2">
 
