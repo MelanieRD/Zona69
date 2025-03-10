@@ -8,6 +8,15 @@ export const Section = () =>{
 
     return (
         <div className="section-container">
+            <div className="image-section">
+                {/* <img src="\img\side-view-woman-bdsm-aesthetics.jpg" alt="" /> */}
+            </div>
+             <div className="products-container">
+                <ProductCard imgSrc={"/img/home/bedtoys.jpg"}/>
+                <ProductCard imgSrc={"/img/home/expertguides.jpg"}/>
+                <ProductCard imgSrc={"/img/home/vibrator.jpg"}/>
+                <ProductCard imgSrc={"/img/home/beachsex.jpg"}/>
+            </div>
             
             <div className="carousel-letters">
                 <ul>
@@ -44,13 +53,8 @@ export const Section = () =>{
                     <li>THRILL</li> 
                 </ul>         
             </div>
-
-            <div className="products-container">
-                <ProductCard imgSrc={"/img/home/bedtoys.jpg"}/>
-                <ProductCard imgSrc={"/img/home/beachsex.jpg"}/>
-                <ProductCard imgSrc={"/img/home/bedtoys.jpg"}/>
-                <ProductCard imgSrc={"/img/home/beachsex.jpg"}/>
-            </div>
+            
+           
 
       
        
