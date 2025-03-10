@@ -11,13 +11,24 @@ export const Section = () =>{
             <div className="image-section">
                 {/* <img src="\img\side-view-woman-bdsm-aesthetics.jpg" alt="" /> */}
             </div>
-             <div className="products-container">
-                <ProductCard imgSrc={"/img/home/bedtoys.jpg"}/>
-                <ProductCard imgSrc={"/img/home/expertguides.jpg"}/>
-                <ProductCard imgSrc={"/img/home/vibrator.jpg"}/>
-                <ProductCard imgSrc={"/img/home/beachsex.jpg"}/>
+
+            <div className="title-section"><h1>69 formas de llegar al cielo</h1>
+
             </div>
-            
+             <div className="products-container">
+                
+                <ProductCard imgSrc={"/img/close-up-cleaning-sex-toys.jpg"} title={"Vibradores"} desc={"Amplia gama de vibradores de diferentes tama;os y formas"}/>
+                <ProductCard imgSrc={"/img/home/bedtoys.jpg"} title={"Accesorios"} desc={"Visita nuestra gama de accesorios"}/>
+                <ProductCard imgSrc={"/img/home/expertguides.jpg"}/>
+                <ProductCard imgSrc={"/img/high-angle-condoms-wrappers-yellow-background.jpg"}/>
+            </div>
+
+
+            <div className="image-section2">
+
+            </div>
+
+
             <div className="carousel-letters">
                 <ul>
                     <li>SEX</li>

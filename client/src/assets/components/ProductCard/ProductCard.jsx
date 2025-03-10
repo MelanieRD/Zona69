@@ -1,6 +1,6 @@
 import "./productCard.css";
 
-export const ProductCard = ({imgSrc}) =>{
+export const ProductCard = ({imgSrc, title, desc}) =>{
     
 
     return (
@@ -12,8 +12,8 @@ export const ProductCard = ({imgSrc}) =>{
                     </div>
 
                     <div class="bottom">
-                        <h3 class="product-name">Vibradores</h3>
-                        <h4 class="product-desc">Explore in-depth analyses of top adult toys, helping you make informed purchasing decisions.</h4>
+                        <h3 class="product-name">{title}</h3>
+                        <h4 class="product-desc">{desc}</h4>
                     </div>
                 </div>
 
