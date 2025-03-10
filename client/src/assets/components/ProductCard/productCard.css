@@ -1,0 +1,39 @@
+.product{
+    display: flex;
+    flex-direction: column;
+    /* background: rgb(233, 38, 38); */
+    width: 35vw;
+    height: 55vh; 
+    margin-bottom: 5vh;
+    
+
+}
+.product .top{
+    background-color: aliceblue;
+    border-radius: 2vw;
+    flex: 3;
+    overflow: hidden;
+}
+
+.product .bottom{
+    flex: 1;
+}
+
+.product .bottom h3{
+    margin: 1vw;
+    font-size: 1.5rem;
+   
+}
+
+.product .bottom h4{
+    margin: 1vw;
+    font-size: 1.2rem;
+     font-weight: 400;
+}
+
+.top .img-product{
+     width: 100%;
+     height: 100%;
+    object-fit: cover; 
+    object-position: bottom;  
+}

@@ -1,0 +1,38 @@
+.carousel-letters{
+    display: flex;
+    background-color: rgb(197, 211, 211);
+}
+
+.carousel-letters ul{
+    display: flex;
+    background-color: rgb(197, 211, 211);
+    /* width: 100vw; */
+
+    animation: scroll 40s linear infinite;
+    -webkit-animation: scroll 40s linear infinite;
+    width: calc(6vw * 62);
+}
+
+.carousel-letters li{
+    display: flex;
+    flex: 1;
+    background-color: rgb(197, 211, 211);
+    padding: 2vh;
+    font-size: 3rem;
+    font-weight: 700;
+    width: 100%;
+
+    
+}
+
+@keyframes scroll{
+    0%{
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+
+    100%{
+        -webkit-transform: translateX(calc(-6vw * 31));
+        transform: translateX(calc(-6vw * 20));
+    }
+}
