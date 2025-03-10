@@ -9,7 +9,7 @@ export const VideoLoop = ()=>{
     <>
         <div className="fullscreen-video-container">
             <div className="fullscreen-video-content">
-                <h1>Zona 69</h1>
+                <h1>Zona69</h1>
                 
             </div>
             
