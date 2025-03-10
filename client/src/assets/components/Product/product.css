@@ -1,16 +1,16 @@
 .product-container{
     display: flex;
     flex-direction: column;
-    background-color: rgb(245, 245, 245);
+    background-color: rgb(212, 212, 212);
     box-shadow: 0 0 0.1vw 0.1vw rgba(160, 160, 160, 0.205);
-   
-    max-width: 25vw;
-    min-width: 25vw;
-    max-height: 25vw;
-    min-height: 15vw;
+    opacity: 0.7;
+    width: 25vw;
+    height: 30vh;
+    
+  
     margin: 0.5vw 0.5vw;
     
-     overflow: hidden; 
+    overflow: hidden; 
     transition: 0.5s;
     cursor: pointer;
    
@@ -19,27 +19,32 @@
 
 .product-container:hover{
     box-shadow: 0 0 0.1vw 0.1vw rgba(0, 0, 0, 0.205);
-    transform: scale(1.02);
+    /* transform: scale(1.02); */
     transition: 0.5s;
+    opacity: 0.8;
+
+    height: 31vh;
+    width: 26vw;
 }
 
 .product-image{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
-    
-    flex: 1;
+   
+    /* background: linear-gradient(90deg, rgba(255,213,201,0.48783263305322133) 0%, rgba(255,255,255,1) 50%, rgba(178,173,255,0.49343487394957986) 100%);    flex: 1; */
     width: 100%;
     height: 100%;
 }
 
 .product-image img{
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
+    object-fit: contain;
+    width: 90%;
+    height: 90%;
+
+   /* object-fit: cover;
     flex-shrink: 0;
-    flex-grow: 0;
+    flex-grow: 0;*/
   
   
 }
@@ -66,6 +71,11 @@
     margin: 0.5rem 0;
     transition: 0.5s;
 }
+
+.product-info h3:hover{
+    transition: 0.5s;
+}
+
 
 .buttons{
     display: flex; 

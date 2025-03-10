@@ -28,7 +28,7 @@ useEffect(() => {
 
   return (
     <dataContext.Provider value={data}>
-      <Nav />
+     
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop dataShop={data} />} />

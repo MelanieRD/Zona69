@@ -1,0 +1,40 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.fullscreen-video-container{
+    position: relative;
+    width: 100vw;
+    height: 85vh;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    border-radius: 5px;
+    
+}
+
+.fullscreen-video-container video{
+    position: absolute;
+    width: auto;
+    height: auto;
+    
+    min-width: 100%;
+    min-height: 100%;
+
+    /*centering*/
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: -1;  
+}
+
+.fullscreen-video-content h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #7a7a7a;
+  }
+  

@@ -8,15 +8,17 @@ import { Link } from "react-router-dom";
 export const Nav = () =>{
 
     return (
+
+        
         <div className="nav-container">
         <nav>
             
             <ul></ul>
             
             <ul className="nav-center">
-                <li><Link to="/">Home</Link></li>
+                <li><Link to="/">Inicio</Link></li>
                  <li><a>Zona 69</a></li>
-                <li><Link to="/shop">Shop</Link></li>    
+                <li><Link to="/shop">Tienda</Link></li>    
             </ul>
 
              <ul className="nav-right">
