@@ -23,3 +23,200 @@
     opacity: 0.7;
     transition: 0.5s;
 }
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    font-family: inherit;
+}
+
+/* Size Variants */
+.button--small {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.button--medium {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+}
+
+.button--large {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+}
+
+/* Style Variants */
+.button--primary {
+    background: #FD4BB1;
+    color: white;
+}
+
+.button--primary:hover {
+    background: #ff69b4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(253, 75, 177, 0.3);
+}
+
+.button--secondary {
+    background: #847AD3;
+    color: white;
+}
+
+.button--secondary:hover {
+    background: #9590db;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(132, 122, 211, 0.3);
+}
+
+.button--outline {
+    background: transparent;
+    border: 2px solid #FD4BB1;
+    color: #FD4BB1;
+}
+
+.button--outline:hover {
+    background: rgba(253, 75, 177, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(253, 75, 177, 0.15);
+}
+
+.button--ghost {
+    background: transparent;
+    color: #FD4BB1;
+}
+
+.button--ghost:hover {
+    background: rgba(253, 75, 177, 0.1);
+    transform: translateY(-2px);
+}
+
+.button--danger {
+    background: #3A1A4E;
+    color: white;
+}
+
+.button--danger:hover {
+    background: #4c2566;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(58, 26, 78, 0.3);
+}
+
+/* States */
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.button--full-width {
+    width: 100%;
+}
+
+/* Loading State */
+.button--loading {
+    cursor: wait;
+}
+
+.button--loading .button__text {
+    opacity: 0;
+}
+
+.button__loader {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.button__loader-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: currentColor;
+    border-radius: 50%;
+    animation: loader 0.6s infinite alternate;
+}
+
+.button__loader-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.button__loader-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes loader {
+    to {
+        opacity: 0.3;
+        transform: translateY(-2px);
+    }
+}
+
+/* Icon Styles */
+.button--with-icon {
+    position: relative;
+}
+
+.button__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+}
+
+/* Hover Effects */
+.button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 60%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s;
+    pointer-events: none;
+}
+
+.button:hover::before {
+    transform: translate(-50%, -50%) scale(2);
+}
+
+/* Focus Styles */
+.button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(253, 75, 177, 0.4);
+}
+
+/* Active State */
+.button:active {
+    transform: translateY(1px) !important;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .button--small {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8125rem;
+    }
+
+    .button--medium {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.9375rem;
+    }
+
+    .button--large {
+        padding: 0.875rem 1.75rem;
+        font-size: 1rem;
+    }
+}

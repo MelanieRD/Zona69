@@ -1,36 +1,66 @@
-import { Product } from "../Product/Product";
+import { Category } from "../Category/Category";
 import "./categorySection.css";
+import { useState } from "react";
 
-export const CategorySection = () => {
+export const CategorySection = ({ 
+    title = "Shop by Category",
+    description = "Discover our curated collections",
+    categories = [],
+    onCategoryClick = (category) => console.log("Category clicked:", category)
+}) => {
+    const defaultCategories = [
+        {
+            id: "women",
+            name: "Women",
+            description: "Elegant and comfortable lingerie for every occasion",
+            image: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?q=80&w=1000&auto=format&fit=crop",
+            buttonText: "Shop Women",
+            isLarge: true,
+            route: "/category/women"
+        },
+        {
+            id: "men",
+            name: "Men",
+            description: "Premium underwear for the modern man",
+            image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=1000&auto=format&fit=crop",
+            buttonText: "Shop Men",
+            isLarge: false,
+            route: "/category/men"
+        },
+        {
+            id: "accessories",
+            name: "Accessories",
+            description: "Complete your intimate wardrobe",
+            image: "https://images.unsplash.com/photo-1585487000128-7c0044e295dc?q=80&w=1000&auto=format&fit=crop",
+            buttonText: "Shop Accessories",
+            isLarge: false,
+            route: "/category/accessories"
+        },
+    ];
+
+    const categoriesToDisplay = categories.length > 0 ? categories : defaultCategories;
 
     return (
-    <div className="categories-container">
-        {/* <h2>Best Sellers</h2> */}
-        <div className="categories">
-
-            <div className="leftColumn">
-            <Product addClass={"bigger"} productName={"Woman"} productDesc={"Woman clothes"} 
-            buttonTxt={"Check it out!"} hideHeartIcon={true} imgSrc={"https://discoverymood.com/wp-content/uploads/2020/04/Mental-Strong-Women-min.jpg"}/>
-         
-            <Product productName={"Man"} productDesc={"Men clothes "} 
-            buttonTxt={"Check it out!"}  hideHeartIcon={true} imgSrc={"https://assets.myntassets.com/w_412,q_60,dpr_2,fl_progressive/assets/images/20778408/2024/3/15/6c82bb4b-6605-423a-82d0-967074e16fd61710477304711-RESIST-EYEWEAR-Adults-Green-Lens--Black-Aviator-Sunglass-wit-6.jpg"}/>
+        <section className="categories-section">
+            <div className="categories-header">
+                <h2>{title}</h2>
+                <p>{description}</p>
             </div>
             
-            <div className="rightColumn">
-            <Product  productName={"Accesories"} productDesc={"Girl clothes and accesories"} 
-            buttonTxt={"Check it out!"}  hideHeartIcon={true} imgSrc={"https://m.media-amazon.com/images/I/51wwVl2r-WL._AC_UY1100_.jpg"}/>
-            <Product addClass={"Sun glasses"} productName={"Woman"} productDesc={"Girl clothes and accesories"} 
-            buttonTxt={"Check it out!"}  hideHeartIcon={true} imgSrc={"https://static.gisela.com/assets/img/suj-push-up-11231/small/top-bikini-push-up1709720206871602527.jpeg"}/>
-          
-
+            <div className="categories-grid">
+                {categoriesToDisplay.map((category) => (
+                    <Category
+                        key={category.id}
+                        name={category.name}
+                        description={category.description}
+                        image={category.image}
+                        buttonText={category.buttonText}
+                        isLarge={category.isLarge}
+                        route={category.route}
+                        onCategoryClick={onCategoryClick}
+                    />
+                ))}
             </div>
-          
-           
-            
-
-        </div>
-
-
-        
-    </div>)
-}
+        </section>
+    );
+};

@@ -1,19 +1,40 @@
 import { CategorySection } from "../../components/CategorySection/CategorySection"
 import { Carousel } from "../../components/Carousel/Carousel"
 import { Footer } from "../../components/Footer/Footer"
+import { Features } from "../../components/Features/Features"
+import { Newsletter } from "../../components/Newsletter/Newsletter"
+import { Collections } from "../../components/Collections/Collections"
+import "./Home.css"
 
 export const Home = ()=>{
-    const img1 = "https://img.freepik.com/free-photo/shopping-concept-close-up-portrait-young-beautiful-attractive-redhair-girl-smiling-looking-camera_1258-126800.jpg";
-    const img2 = "https://img.freepik.com/free-photo/excited-girl-scream-joy-making-fist-pump-holding-shopping-bag-rejoicing-standing-dress-ove_1258-120529.jpg";
-    const img3 = "https://www.shutterstock.com/image-photo/trendy-beautiful-young-asian-woman-260nw-1590685858.jpg";
+    const carouselImages = [
+        "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?q=80&w=1000&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=1000&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1585487000128-7c0044e295dc?q=80&w=1000&auto=format&fit=crop"
+    ];
 
-    const images = [img1, img2, img3];
+    const handleNewsletterSubmit = (email) => {
+        // Here you can implement your newsletter subscription logic
+        console.log("Newsletter subscription:", email);
+    };
 
     return (
-        <>
-            <Carousel imgsURLS={images}/>
-            <CategorySection/>
+        <main className="home-page">
+            <section className="hero-section">
+                <Carousel imgsURLS={carouselImages}/>
+            </section>
+
+            <Features />
+
+            <section className="categories-section">
+                <CategorySection/>
+            </section>
+
+            <Collections />
+
+            <Newsletter onSubmit={handleNewsletterSubmit} />
+
             <Footer/>
-        </>
+        </main>
     )
 }
