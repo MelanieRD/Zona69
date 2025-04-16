@@ -1,4 +1,5 @@
 import "./Collections.css";
+import { Link } from "react-router-dom";
 
 export const Collections = () => {
     const newArrivals = [
@@ -33,28 +34,34 @@ export const Collections = () => {
 
     return (
         <section className="collections-section">
-            <div className="collections-header">
-                <h2>Tendencias</h2>
-                <p>Nuevos productos de la temporada</p>
-            </div>
-            
-            <div className="collections-grid">
-                {newArrivals.map((item) => (
-                    <div key={item.id} className="collection-card">
-                        <div className="collection-image">
-                            <img src={item.image} alt={item.name} />
-                            {item.isNew && <span className="new-badge">New</span>}
-                            <div className="collection-overlay">
-                                <div className="collection-info">
-                                    <h3>{item.name}</h3>
-                                    <p>{item.description}</p>
-                                    <span className="collection-price">{item.price}</span>
+            <div className="collections-container">
+                <div className="section-header">
+                    <h2 className="section-title">Nuevos Lanzamientos</h2>
+                    <p className="section-subtitle">Descubre nuestras últimas incorporaciones</p>
+                </div>
+                
+                <div className="collections-grid">
+                    {newArrivals.map((item) => (
+                        <Link 
+                            key={item.id} 
+                            to={item.route}
+                            className="collection-card"
+                        >
+                            <div className="collection-image">
+                                <img src={item.image} alt={item.name} />
+                                {item.isNew && <span className="new-badge">Nuevo</span>}
+                                <div className="collection-overlay">
+                                    <div className="collection-info">
+                                        <h3>{item.name}</h3>
+                                        <p>{item.description}</p>
+                                        <span className="collection-price">{item.price}</span>
+                                    </div>
+                                    <button className="collection-button">Ver Detalles</button>
                                 </div>
-                                <button className="collection-button">View Details</button>
                             </div>
-                        </div>
-                    </div>
-                ))}
+                        </Link>
+                    ))}
+                </div>
             </div>
         </section>
     );

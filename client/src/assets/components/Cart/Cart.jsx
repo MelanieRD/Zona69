@@ -27,7 +27,7 @@ export const Cart = () => {
         const encodedMessage = encodeURIComponent(message);
         
         // Crear el enlace de WhatsApp
-        const whatsappUrl = `https://wa.me/1234567890?text=${encodedMessage}`;
+        const whatsappUrl = `https://wa.me/18493772440?text=${encodedMessage}`;
         
         // Abrir WhatsApp en una nueva pestaña
         window.open(whatsappUrl, '_blank');
