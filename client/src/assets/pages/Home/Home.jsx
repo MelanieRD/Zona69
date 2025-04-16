@@ -6,6 +6,7 @@ import { Newsletter } from "../../components/Newsletter/Newsletter"
 import { Collections } from "../../components/Collections/Collections"
 import AboutStore from "../../components/AboutStore/AboutStore"
 import "./home.css"
+//changed al ready
 
 export const Home = ()=>{
     const carouselImages = [
