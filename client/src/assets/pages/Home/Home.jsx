@@ -5,7 +5,7 @@ import { Features } from "../../components/Features/Features"
 import { Newsletter } from "../../components/Newsletter/Newsletter"
 import { Collections } from "../../components/Collections/Collections"
 import AboutStore from "../../components/AboutStore/AboutStore"
-import "./Home.css"
+import "./home.css"
 
 export const Home = ()=>{
     const carouselImages = [
