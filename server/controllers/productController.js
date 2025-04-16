@@ -16,7 +16,7 @@ const getAllproducts = async (req, res) => {
 const getProductWithLimit = async (req, res) => {
     try{
         const {filters, skip, limit} = req.body;
-        console.log(req.body); 
+       // console.log(req.body); 
 
          // Si filters.category es un array, usa $in para buscar productos que pertenezcan a cualquiera de las categorías
         if (filters.category && Array.isArray(filters.category)) {
@@ -25,6 +25,7 @@ const getProductWithLimit = async (req, res) => {
 
         const products = await Product.find(filters).skip(skip).limit(limit);
         const totalProducts = await Product.countDocuments(filters);
+       // console.log( "visualiza productos" +products);
         res.status(200).json({products, totalProducts});
     } catch (error) {
         res.status(500).json({ message: "Error getting products with a limit" });

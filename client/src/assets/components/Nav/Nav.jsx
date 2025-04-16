@@ -4,6 +4,7 @@ import { BiCart } from "react-icons/bi";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./nav.css";
+import { Cart } from "../Cart/Cart";
 
 export const Nav = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -42,7 +43,8 @@ export const Nav = () => {
                         <span className="hamburger"></span>
                     </button>
                     <Link to="/" className="nav-logo">
-                        <img src="/logo.png" alt="LOGO" />
+                       {/* <img src="/logo.png" alt="LOGO" />*/}
+                        <h1 className={`nav-logo-text ${isScrolled ? 'scrolled' : ''}`}>ZONA69</h1>
                     </Link>
                 </div>
                 
@@ -51,22 +53,23 @@ export const Nav = () => {
                         <li>
                             <Link 
                                 to="/" 
-                                className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+                                className={`nav-link ${location.pathname === '/' ? 'active' : ''} ${isScrolled ? 'scrolled' : ''}`}
                                 onClick={closeMobileMenu}
                             >
-                                Home
+                                Inicio
                             </Link>
                         </li>
                         <li>
                             <Link 
                                 to="/shop" 
-                                className={`nav-link ${location.pathname === '/shop' ? 'active' : ''}`}
+                                className={`nav-link ${location.pathname === '/shop' ? 'active' : ''} ${isScrolled ? 'scrolled' : ''}`}
                                 onClick={closeMobileMenu}
                             >
-                                Shop
+                                Productos
                             </Link>
                         </li>
-                        <li>
+                        
+                        {/*<li>
                             <Link 
                                 to="/about" 
                                 className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
@@ -74,23 +77,21 @@ export const Nav = () => {
                             >
                                 About us
                             </Link>
-                        </li>
+                        </li>*/}
+                        
                     </ul>
                 </div>
 
                 <div className="nav-right">
                     <ul className="nav-icons">
-                        <li>
+                        {/*<li>
                             <Link to="/wishlist" className="nav-icon-link">
                                 <HiHeart className="icon-nav" />
                                 <span className="icon-badge">0</span>
                             </Link>
-                        </li>
+                        </li>*/}
                         <li>
-                            <Link to="/cart" className="nav-icon-link">
-                                <BiCart className="icon-nav" />
-                                <span className="icon-badge">0</span>
-                            </Link>
+                            <Cart />
                         </li>
                     </ul>
                 </div>

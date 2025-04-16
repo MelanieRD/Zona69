@@ -206,7 +206,8 @@ export const Shop = () => {
                                         productName={product.name}
                                         productPrice={product.price}
                                         productDesc={product.description}
-                                        imgSrc={product.imgSrc}
+                                        imgSrc={product.imageUrl}
+                                        id={product._id}
                                     />
                                 ))}
                             </div>

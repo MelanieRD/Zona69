@@ -14,6 +14,10 @@
     backdrop-filter: blur(10px);
 }
 
+.nav-logo-text.scrolled {
+    color: #333;
+}
+
 .nav {
     max-width: 1400px;
     margin: 0 auto;
@@ -53,9 +57,11 @@
 }
 
 .nav-link {
-    color: #333;
+    color: #ffffff;
+    text-shadow: 1.5px 1.5px 1.5px #616161;
     text-decoration: none;
-    font-weight: 500;
+    font-weight:bolder;
+   
     font-size: 1rem;
     position: relative;
     padding: 0.5rem 0;
@@ -71,6 +77,11 @@
     height: 2px;
     background: #7B2FBF;
     transition: width 0.3s ease;
+}
+
+.nav-link.scrolled {
+    text-shadow:none;
+    color: #333;
 }
 
 .nav-link:hover,

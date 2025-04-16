@@ -90,9 +90,9 @@ export const Carousel = ({imgsURLS}) => {
                 
                 <div className="carousel-info-container">
                 <div className="info">
-                    <h2>Discover Elegance</h2>
+                    <h2>Descubre zona 69</h2>
                     <p>
-                        Explore our new collection of premium lingerie, designed for comfort and confidence.
+                       69 formas para llegar al cielo, una experiencia celestial para los sentidos. 
                     </p>
                     <div className="carousel-buttons">
                         <Button 
@@ -101,13 +101,13 @@ export const Carousel = ({imgsURLS}) => {
                             icon={<FaArrowRight />}
                             iconPosition="right"
                         >
-                            Shop Now
+                            Descubrir
                         </Button>
                         <Button 
                             variant="outline" 
                             size="large"
                         >
-                            Learn More
+                            Mas información
                         </Button>
                     </div>
                 </div>

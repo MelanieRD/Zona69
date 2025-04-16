@@ -35,3 +35,17 @@ export const getProductsWithLimit = async (skip, limit, filters)=>{
         return [];
 
     }}
+
+export const getProductById = async (id) => {
+    try {
+        const response = await fetch(`http://localhost:5074/app/products/${id}`);
+        if (!response.ok) {
+            throw new Error('Error al obtener los detalles del producto');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching product details:', error);
+        return null;
+    }
+};

@@ -3,9 +3,11 @@ import './App.css'
 import { Nav } from './assets/components/Nav/Nav'
 import { Home } from './assets/pages/Home/Home'
 import { Shop } from './assets/pages/Shop/Shop'
+import { ProductDetail } from './assets/pages/productDetail/ProductDetail'
 import { Route, Routes } from 'react-router-dom'
 import { getListItems } from './assets/utils/shopUtils'
 import { createContext } from 'react'
+import { CartProvider } from './context/CartContext'
 
 function App() {
   const dataContext = createContext();
@@ -27,13 +29,16 @@ useEffect(() => {
 }, [])
 
   return (
-    <dataContext.Provider value={data}>
-      <Nav />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop dataShop={data} />} />
-        </Routes>
-    </dataContext.Provider>
+    <CartProvider>
+      <dataContext.Provider value={data}>
+        <Nav />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<Shop dataShop={data} />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+          </Routes>
+      </dataContext.Provider>
+    </CartProvider>
   )
 }
 
