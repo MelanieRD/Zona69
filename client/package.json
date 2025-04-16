@@ -2,7 +2,7 @@
   "name": "shop",
   "private": true,
   "version": "0.0.0",
-  "type": "commonjs", 
+  "type": "commonjs",
   "scripts": {
     "dev": "vite",
     "server": "nodemon server/connect.js",

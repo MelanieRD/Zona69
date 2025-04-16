@@ -2,12 +2,13 @@ import { CgProfile } from "react-icons/cg";
 import { HiHeart } from "react-icons/hi";
 import { BiCart } from "react-icons/bi";
 import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./nav.css";
-import { Link } from "react-router-dom";
 
 export const Nav = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -23,33 +24,77 @@ export const Nav = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
+    const closeMobileMenu = () => {
+        setIsMobileMenuOpen(false);
+    };
+
     return (
-        <div className={`nav-container ${isScrolled ? 'scrolled' : ''}`}>
-            <nav>
+        <header className={`nav-container ${isScrolled ? 'scrolled' : ''}`}>
+            <nav className="nav">
                 <div className="nav-left">
                     <button 
-                        className="mobile-menu-button"
+                        className={`mobile-menu-button ${isMobileMenuOpen ? 'active' : ''}`}
                         onClick={toggleMobileMenu}
+                        aria-label="Toggle menu"
                     >
                         <span className="hamburger"></span>
                         <span className="hamburger"></span>
                         <span className="hamburger"></span>
                     </button>
-                    <img src="logo" alt="LOGO" />
+                    <Link to="/" className="nav-logo">
+                        <img src="/logo.png" alt="LOGO" />
+                    </Link>
                 </div>
                 
-                <ul className={`nav-center ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/shop">Shop</Link></li>
-                    <li><a>About us</a></li>
-                </ul>
+                <div className={`nav-center ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
+                    <ul className="nav-links">
+                        <li>
+                            <Link 
+                                to="/" 
+                                className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+                                onClick={closeMobileMenu}
+                            >
+                                Home
+                            </Link>
+                        </li>
+                        <li>
+                            <Link 
+                                to="/shop" 
+                                className={`nav-link ${location.pathname === '/shop' ? 'active' : ''}`}
+                                onClick={closeMobileMenu}
+                            >
+                                Shop
+                            </Link>
+                        </li>
+                        <li>
+                            <Link 
+                                to="/about" 
+                                className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
+                                onClick={closeMobileMenu}
+                            >
+                                About us
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
 
-                <ul className="nav-right">
-                    {/* <li ><a> <CgProfile className="icon-nav"/></a></li> */}
-                    <li><HiHeart className="icon-nav"/></li>
-                    <li><BiCart className="icon-nav"/></li>
-                </ul>
+                <div className="nav-right">
+                    <ul className="nav-icons">
+                        <li>
+                            <Link to="/wishlist" className="nav-icon-link">
+                                <HiHeart className="icon-nav" />
+                                <span className="icon-badge">0</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/cart" className="nav-icon-link">
+                                <BiCart className="icon-nav" />
+                                <span className="icon-badge">0</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
             </nav>
-        </div>
-    )
-}
+        </header>
+    );
+};

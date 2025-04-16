@@ -1,6 +1,6 @@
 export const getListItems = async ()=>{
     try {
-        const response =  await fetch("http://localhost:5000/app/products/all");
+        const response =  await fetch("http://localhost:5074/app/products/all");
         if(!response.ok){
             throw new Error('Error al obtener todos los datos ');
         }
@@ -15,7 +15,7 @@ export const getListItems = async ()=>{
 export const getProductsWithLimit = async (skip, limit, filters)=>{
     //console.log(JSON.stringify({ skip, limit, filters}));
     try {
-        const response =  await fetch("http://localhost:5000/app/products/limit", {
+        const response =  await fetch("http://localhost:5074/app/products/limit", {
             method:'POST',
             headers: {
                 'Content-Type': 'application/json'

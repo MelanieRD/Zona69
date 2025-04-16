@@ -4,182 +4,246 @@ import { Product } from "../../components/Product/Product";
 import { useContext, useEffect, useState } from "react";
 import { set } from "mongoose";
 import { getProductsWithLimit } from "../../utils/shopUtils";
-export const Shop = ({dataShop})=>{
+import { FaFilter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-    const [productPage, setProductPage] = useState(0); 
+export const Shop = () => {
+    const [productPage, setProductPage] = useState(0);
     const [productsDataLimited, setProductsDataLimited] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
    
     const productsPerPage = 6;
-    const pages = totalProducts/productsPerPage;
-    const paginationBottons = [];
+    const pages = Math.ceil(totalProducts / productsPerPage);
 
-    //FILTERS 
+    // FILTERS 
     const [filters, setFilters] = useState({});
 
-    
-
-     const colors = [
-        {colorCss:"white", colorDatabaseValue:"blanco"},
-        {colorCss:"gray", colorDatabaseValue:"gris"},
-        {colorCss:"black", colorDatabaseValue:"negro"},
-        {colorCss:"red", colorDatabaseValue:"red"}, 
-        {colorCss:"blue", colorDatabaseValue:"azul"}, 
-        {colorCss:"green", colorDatabaseValue:"Green"}, 
-        {colorCss:"yellow", colorDatabaseValue:"yellow"},
-        {colorCss:"brown", colorDatabaseValue:"brown"},
-        {colorCss:"purple", colorDatabaseValue:"Grape"},
-        
+    const colors = [
+        { colorCss: "white", colorDatabaseValue: "blanco", label: "White" },
+        { colorCss: "gray", colorDatabaseValue: "gris", label: "Gray" },
+        { colorCss: "black", colorDatabaseValue: "negro", label: "Black" },
+        { colorCss: "red", colorDatabaseValue: "red", label: "Red" },
+        { colorCss: "blue", colorDatabaseValue: "azul", label: "Blue" },
+        { colorCss: "green", colorDatabaseValue: "Green", label: "Green" },
+        { colorCss: "yellow", colorDatabaseValue: "yellow", label: "Yellow" },
+        { colorCss: "brown", colorDatabaseValue: "brown", label: "Brown" },
+        { colorCss: "purple", colorDatabaseValue: "Grape", label: "Purple" },
     ];
 
     const sizes = [
-        {sizeName:"XS", sizeDatabaseValue:"XS"},
-        {sizeName:"S", sizeDatabaseValue:"S"},
-        {sizeName:"L", sizeDatabaseValue:"L"},
-        {sizeName:"XXL", sizeDatabaseValue:"XXL"},
+        { sizeName: "XS", sizeDatabaseValue: "XS" },
+        { sizeName: "S", sizeDatabaseValue: "S" },
+        { sizeName: "L", sizeDatabaseValue: "L" },
+        { sizeName: "XXL", sizeDatabaseValue: "XXL" },
     ];
 
     const categories = [
-        {CategoryName:"Shirts", CategoryDatabaseValue:"Shirts"},
-        {CategoryName:"Pants", CategoryDatabaseValue:"Pants"},
-        {CategoryName:"Sweet", CategoryDatabaseValue:"Sweet"},
-        {CategoryName:"Sour", CategoryDatabaseValue:"Sour"},
-
+        { CategoryName: "Shirts", CategoryDatabaseValue: "Shirts" },
+        { CategoryName: "Pants", CategoryDatabaseValue: "Pants" },
+        { CategoryName: "Sweaters", CategoryDatabaseValue: "Sweet" },
+        { CategoryName: "Accessories", CategoryDatabaseValue: "Sour" },
     ];
 
-    const handleColorFilter = (value)=> {
-        if(value.length > 0){
-            const newColorFilter = {...filters, color:value};
-            setFilters(newColorFilter);
-        } else {
-            const { color, ...newFilters } = filters; 
-            setFilters(newFilters); 
-        }
-
+    const handleColorFilter = (value) => {
+        setFilters(prev => {
+            if (value) {
+                return { ...prev, color: value };
+            } else {
+                const { color, ...rest } = prev;
+                return rest;
+            }
+        });
         setProductPage(0);
-    }
-
-    const handleSizeFilter = (value)=> {
-        if(value.length > 0){
-            const newSizeFilter = {...filters, size:value}
-            setFilters(newSizeFilter);
-        } else {
-            const { size, ...newFilters } = filters;
-            setFilters(newFilters);
-        }
-        setProductPage(0)
-    }
-
-    const handleCategoryFilter = (value)=> {
-        if(value.length > 0){
-            const newCategoryFilter = {...filters, categoryTags:value}
-            setFilters(newCategoryFilter);
-        } else {
-            const { categoryTags, ...newFilters } = filters;
-            setFilters(newFilters);
-        }
-         setProductPage(0)
-    }
-    
-    
-
-
-
-
-    // GET PRODUCTS WITH LIMIT
-    const getLimitNumOfProducts = async ()=> {
-        const dataProducts = await getProductsWithLimit(productPage * productsPerPage, productsPerPage, filters );  
-        setProductsDataLimited(dataProducts.products);
-        setTotalProducts(dataProducts.totalProducts);
-    }
-
-    // PAGINATION
-    const handleProductPage = (num)=> {
-        setProductPage(num);
-    }
-    const handlePrevProductPage = ()=> {
-        if(productPage > 0){
-            setProductPage(productPage - 1);
-        }
-        console.log(productPage);  
-    }
-    const handleNextProductPage = ()=> {
-        if(productPage < pages-1){
-            setProductPage(productPage + 1);
-        }
-        console.log(productPage);
-    }
-    const handlePagination = () => {
-        let counter = 0;
-
-        while(counter <= pages){
-            let page = counter; 
-            paginationBottons.push(<div className={ counter == productPage ? "navigation-list-btn active" : " navigation-list-btn "} key={counter} onClick={()=>{handleProductPage(page)}}>{counter+1}</div>);
-            counter++;
-        }
-        return paginationBottons;
     };
 
-            // END PRODUCTS PAGINATION //
+    const handleSizeFilter = (value) => {
+        setFilters(prev => {
+            if (value) {
+                return { ...prev, size: value };
+            } else {
+                const { size, ...rest } = prev;
+                return rest;
+            }
+        });
+        setProductPage(0);
+    };
+
+    const handleCategoryFilter = (value) => {
+        setFilters(prev => {
+            if (value) {
+                return { ...prev, categoryTags: value };
+            } else {
+                const { categoryTags, ...rest } = prev;
+                return rest;
+            }
+        });
+        setProductPage(0);
+    };
+
+    const getLimitNumOfProducts = async () => {
+        setIsLoading(true);
+        try {
+            const dataProducts = await getProductsWithLimit(
+                productPage * productsPerPage,
+                productsPerPage,
+                filters
+            );
+            setProductsDataLimited(dataProducts.products);
+            setTotalProducts(dataProducts.totalProducts);
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleProductPage = (num) => {
+        setProductPage(num);
+    };
+
+    const handlePrevProductPage = () => {
+        if (productPage > 0) {
+            setProductPage(productPage - 1);
+        }
+    };
+
+    const handleNextProductPage = () => {
+        if (productPage < pages - 1) {
+            setProductPage(productPage + 1);
+        }
+    };
 
     useEffect(() => {
         getLimitNumOfProducts();
     }, [productPage, filters]);
 
-return (
-    <>
-        <div className="shop-container">
-            <div className="shop-products-filters">
-               
-                <h5>colors</h5>
-                <div className="section-filter colors-filter">
-                    <div className={filters.color == undefined  ? "color-filter-circle multicolor active" : "color-filter-circle multicolor"}  onClick={()=>handleColorFilter("")} ></div>
-                    {colors.map((color, index) => {
-                        return <div key={index} className={filters.color == color.colorDatabaseValue  ? "color-filter-circle active" : "color-filter-circle "} style={{backgroundColor: color.colorCss}} onClick={()=>handleColorFilter(color.colorDatabaseValue)}></div>
-                    })}
-                </div>
-               
-                 <h5>size</h5>
-                 <hr />
-                 <div className="section-filter size-filter"  >
-                     <h6 onClick={()=>{handleSizeFilter("")}} className={filters.size == undefined  ? "active" : ""} >All Sizes</h6>
-                    {sizes.map((size, index) => {
-                        return <h6 key={index} onClick={()=>{handleSizeFilter(size.sizeDatabaseValue)}} className={filters.size == size.sizeDatabaseValue  ? "active" : ""}>{size.sizeName}</h6>;
-                    })}
-                    
-                 </div>
-                 {/* <h5>price</h5>
-                 <hr />
-                <div className="section-filter">
-                    <input type="range" />
-                </div> */}
-                <h5>categories</h5>
-                <hr />
-
-                <div className="section-filter categories-filter">
-                    <h6 onClick={()=>{handleCategoryFilter("")}} className={filters.categoryTags == undefined  ? "active" : " "}>All</h6>
-                    {categories.map((category, index) => {
-                        return <h6 key={index} onClick={()=>{handleCategoryFilter(category.CategoryDatabaseValue)}} className={filters.categoryTags == category.CategoryDatabaseValue  ? "active" : " "}>{category.CategoryName}</h6>;
-                    })}
-                </div>
-                         
+    return (
+        <div className="shop-page">
+            <div className="shop-header">
+                <h1>Shop</h1>
+                <button 
+                    className="filter-toggle"
+                    onClick={() => setIsFilterOpen(!isFilterOpen)}
+                >
+                    <FaFilter /> Filters
+                </button>
             </div>
-            <div className="shop-products-list">
-                <div className="products-list">  
 
-                    {productsDataLimited.map((product, index) => {
-                        return <Product key={index} productName={product.name} productPrice={product.price} productDesc={product.description} imgSrc={product.imgSrc}/>
-                    })}   
-                 
+            <div className="shop-container">
+                <div className={`shop-products-filters ${isFilterOpen ? 'open' : ''}`}>
+                    <div className="filter-section">
+                        <h5>Colors</h5>
+                        <div className="section-filter colors-filter">
+                            <div
+                                className={`color-filter-circle multicolor ${!filters.color ? 'active' : ''}`}
+                                onClick={() => handleColorFilter("")}
+                            ></div>
+                            {colors.map((color, index) => (
+                                <div
+                                    key={index}
+                                    className={`color-filter-circle ${filters.color === color.colorDatabaseValue ? 'active' : ''}`}
+                                    style={{ backgroundColor: color.colorCss }}
+                                    onClick={() => handleColorFilter(color.colorDatabaseValue)}
+                                    title={color.label}
+                                ></div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="filter-section">
+                        <h5>Size</h5>
+                        <div className="section-filter size-filter">
+                            <button
+                                className={!filters.size ? 'active' : ''}
+                                onClick={() => handleSizeFilter("")}
+                            >
+                                All Sizes
+                            </button>
+                            {sizes.map((size, index) => (
+                                <button
+                                    key={index}
+                                    className={filters.size === size.sizeDatabaseValue ? 'active' : ''}
+                                    onClick={() => handleSizeFilter(size.sizeDatabaseValue)}
+                                >
+                                    {size.sizeName}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="filter-section">
+                        <h5>Categories</h5>
+                        <div className="section-filter categories-filter">
+                            <button
+                                className={!filters.categoryTags ? 'active' : ''}
+                                onClick={() => handleCategoryFilter("")}
+                            >
+                                All
+                            </button>
+                            {categories.map((category, index) => (
+                                <button
+                                    key={index}
+                                    className={filters.categoryTags === category.CategoryDatabaseValue ? 'active' : ''}
+                                    onClick={() => handleCategoryFilter(category.CategoryDatabaseValue)}
+                                >
+                                    {category.CategoryName}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-                <div className="navegation-list-products"> 
-                    <div className="navigation-list-btn prev" onClick={handlePrevProductPage}>previous</div>
-                      {handlePagination()}
-                    <div className="navigation-list-btn next" onClick={handleNextProductPage}>next</div>                   
+
+                <div className="shop-products-list">
+                    {isLoading ? (
+                        <div className="loading-spinner">Loading...</div>
+                    ) : (
+                        <>
+                            <div className="products-grid">
+                                {productsDataLimited.map((product, index) => (
+                                    <Product
+                                        key={index}
+                                        productName={product.name}
+                                        productPrice={product.price}
+                                        productDesc={product.description}
+                                        imgSrc={product.imgSrc}
+                                    />
+                                ))}
+                            </div>
+
+                            <div className="pagination">
+                                <button
+                                    className="pagination-btn prev"
+                                    onClick={handlePrevProductPage}
+                                    disabled={productPage === 0}
+                                >
+                                    <FaChevronLeft /> Previous
+                                </button>
+                                
+                                <div className="pagination-numbers">
+                                    {Array.from({ length: pages }, (_, i) => (
+                                        <button
+                                            key={i}
+                                            className={`pagination-btn ${productPage === i ? 'active' : ''}`}
+                                            onClick={() => handleProductPage(i)}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <button
+                                    className="pagination-btn next"
+                                    onClick={handleNextProductPage}
+                                    disabled={productPage === pages - 1}
+                                >
+                                    Next <FaChevronRight />
+                                </button>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
-        
         </div>
-    </>
-)
+    );
 };
