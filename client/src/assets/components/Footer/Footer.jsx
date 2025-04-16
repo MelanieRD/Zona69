@@ -5,10 +5,9 @@ export const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     const quickLinks = [
-        { name: "Home", path: "/" },
-        { name: "Shop", path: "/shop" },
-        { name: "Collections", path: "/collections" },
-        { name: "About Us", path: "/about" }
+        { name: "Inicio", path: "/" },
+        { name: "Catálogo", path: "/shop" },
+
     ];
 
     const customerService = [
@@ -30,9 +29,9 @@ export const Footer = () => {
         {
             icon: <FaWhatsapp />,
             label: "WhatsApp",
-            info: "+1 234 567 890",
-            url: "https://wa.me/1234567890",
-            description: "Chat with us directly"
+            info: "Yan Carlos Herrera",
+            url: "https://wa.me/18493772440",
+            description: "Chatea con nosotros directamente"
         }
     ];
 
@@ -40,9 +39,9 @@ export const Footer = () => {
         {
             icon: <FaEnvelope />,
             label: "Email",
-            info: "contact@lingerieshop.com",
-            url: "mailto:contact@lingerieshop.com",
-            description: "Send us an email"
+            info: "contact@zona69.com",
+            url: "mailto:contact@lzona69.com",
+            description: "Envianos un email"
         }
     ];
 
@@ -50,10 +49,11 @@ export const Footer = () => {
         <footer className="footer">
             <div className="footer-content">
                 <div className="footer-section">
-                    <h3 className="footer-title">Lingerie Shop</h3>
+                    <h3 className="footer-title">Zona 69</h3>
                     <p className="footer-description">
-                        Discover the perfect blend of comfort and elegance in our collection of premium lingerie.
+                        69 formas de llegar al cielo
                     </p>
+                    <p className="footer-description"> Imagenes Diseñadas por Freepik</p>
                     <div className="social-links">
                         {socialLinks.map((social, index) => (
                             <a 
@@ -70,7 +70,7 @@ export const Footer = () => {
                 </div>
 
                 <div className="footer-section">
-                    <h3 className="footer-title">Quick Links</h3>
+                    <h3 className="footer-title">Enlaces Rapidos</h3>
                     <ul className="footer-links">
                         {quickLinks.map((link, index) => (
                             <li key={index}>
@@ -129,7 +129,7 @@ export const Footer = () => {
 
             <div className="footer-bottom">
                 <p className="copyright">
-                    © {currentYear} Lingerie Shop. All rights reserved.
+                    © {currentYear} Zona 69. Todos los derechos reservados.
                 </p>
                 <div className="payment-methods">
                     <span className="payment-icon">💳</span>

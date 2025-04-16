@@ -2,10 +2,10 @@ import { useState } from "react";
 import "./Newsletter.css";
 
 export const Newsletter = ({ 
-    title = "Subscribe to Our Newsletter",
-    description = "Get the latest updates on new products and upcoming sales",
-    buttonText = "Subscribe",
-    placeholder = "Enter your email",
+    title = "Suscribete a nuestro newsletter",
+    description = "Recibe ofertas exclusivas y novedades de la temporada",
+    buttonText = "Subscribirse",
+    placeholder = "Escribe tu correo",
     onSubmit = (email) => console.log("Subscribed:", email)
 }) => {
     const [email, setEmail] = useState("");

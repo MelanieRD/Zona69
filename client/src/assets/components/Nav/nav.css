@@ -57,12 +57,16 @@
 }
 
 .nav-link {
-    color: #ffffff;
-    text-shadow: 1.5px 1.5px 1.5px #616161;
+    color: #000000;
+    text-shadow: 
+        -0.5px -0.5px 0 #fff,
+        0.5px -0.5px 0 #fff,
+        -0.5px 0.5px 0 #fff,
+        0.5px 0.5px 0 #fff;
     text-decoration: none;
     font-weight:bolder;
    
-    font-size: 1rem;
+    font-size: 1.2rem;
     position: relative;
     padding: 0.5rem 0;
     transition: color 0.3s ease;

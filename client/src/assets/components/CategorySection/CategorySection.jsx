@@ -3,35 +3,35 @@ import "./categorySection.css";
 import { useState } from "react";
 
 export const CategorySection = ({ 
-    title = "Shop by Category",
-    description = "Discover our curated collections",
+    title = "Selecciona una categoria",
+    description = "Descubre nuestra colección de productos",
     categories = [],
     onCategoryClick = (category) => console.log("Category clicked:", category)
 }) => {
     const defaultCategories = [
         {
-            id: "women",
-            name: "Women",
-            description: "Elegant and comfortable lingerie for every occasion",
-            image: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?q=80&w=1000&auto=format&fit=crop",
+            id: "vibradores",
+            name: "Vibradores",
+            description: "Vibradores para todo tipo de gustos y necesidades",
+            image:  "/images/categorias/categoria1.jpg",
             buttonText: "Shop Women",
             isLarge: true,
             route: "/category/women"
         },
         {
-            id: "men",
-            name: "Men",
-            description: "Premium underwear for the modern man",
-            image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=1000&auto=format&fit=crop",
+            id: "preservativos",
+            name: "preservativos",
+            description: "Lubricantes, preservativos y algo mas",
+            image: "/images/categorias/categoria2.jpg",
             buttonText: "Shop Men",
             isLarge: false,
             route: "/category/men"
         },
         {
-            id: "accessories",
-            name: "Accessories",
-            description: "Complete your intimate wardrobe",
-            image: "https://images.unsplash.com/photo-1585487000128-7c0044e295dc?q=80&w=1000&auto=format&fit=crop",
+            id: "Juguete",
+            name: "Juguetes Realistas",
+            description: "Juguetes realistas para salir de lo cotidiano",
+            image: "/images/categorias/categoria3.jpg",
             buttonText: "Shop Accessories",
             isLarge: false,
             route: "/category/accessories"

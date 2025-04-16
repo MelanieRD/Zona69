@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./carousel.css";
 import "./img-slider.css"
 import { BsCircle, BsCircleFill } from "react-icons/bs";
@@ -6,11 +7,11 @@ import { Button } from "../Button/Button";
 import { FaArrowRight } from "react-icons/fa";
 
 export const Carousel = ({imgsURLS}) => {
-
- const [imageIndex, setImageIndex] = useState(0);
- const [isReversed, setIsReversed] = useState(false);
- const carouselRef = useRef(null);
- const [isHovered, setIsHovered] = useState(false);
+    const navigate = useNavigate();
+    const [imageIndex, setImageIndex] = useState(0);
+    const [isReversed, setIsReversed] = useState(false);
+    const carouselRef = useRef(null);
+    const [isHovered, setIsHovered] = useState(false);
 
  useEffect(() => {
    if (isHovered) return;
@@ -100,6 +101,7 @@ export const Carousel = ({imgsURLS}) => {
                             size="large"
                             icon={<FaArrowRight />}
                             iconPosition="right"
+                            onClick={() => navigate('/shop')}
                         >
                             Descubrir
                         </Button>

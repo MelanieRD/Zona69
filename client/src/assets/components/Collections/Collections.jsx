@@ -4,28 +4,28 @@ export const Collections = () => {
     const newArrivals = [
         {
             id: 1,
-            name: "Lace Bralette",
-            description: "Elegant lace design with comfortable fit",
-            price: "$49.99",
-            image: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?q=80&w=1000&auto=format&fit=crop",
+            name: "Vagina realista",
+            description: "Vagina realista, suave, con textura y diferentes niveles de vibración",
+            price: "$2,500",
+            image: "/images/nuevo/nuevo1.jpg",
             route: "/product/lace-bralette",
             isNew: true
         },
         {
             id: 2,
-            name: "Silk Robe",
-            description: "Luxurious silk robe for special moments",
-            price: "$79.99",
-            image: "https://images.unsplash.com/photo-1585487000128-7c0044e295dc?q=80&w=1000&auto=format&fit=crop",
+            name: "PLUG METÁLICO",
+            description: "Plug metálico, duradero",
+            price: "$500",
+            image: "/images/nuevo/nuevo5.jpg",
             route: "/product/silk-robe",
             isNew: true
         },
         {
             id: 3,
-            name: "Cotton Briefs Set",
-            description: "Comfortable everyday essentials",
-            price: "$29.99",
-            image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=1000&auto=format&fit=crop",
+            name: "RealisticDick",
+            description: "Textura premium, para los golosos",
+            price: "$1,500",
+            image: "/images/nuevo/nuevo3.jpg",
             route: "/product/cotton-briefs",
             isNew: true
         }
@@ -34,8 +34,8 @@ export const Collections = () => {
     return (
         <section className="collections-section">
             <div className="collections-header">
-                <h2>New Arrivals</h2>
-                <p>Discover our latest additions to the collection</p>
+                <h2>Tendencias</h2>
+                <p>Nuevos productos de la temporada</p>
             </div>
             
             <div className="collections-grid">
