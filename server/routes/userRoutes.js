@@ -3,8 +3,11 @@ const verifyToken = require("../middlewares/authMiddleware");
 const authorizeRoles = require("../middlewares/roleMiddleware");
 const userRouter = express.Router();
 const { authenticateToken, authorizeRole } = require('../middlewares/auth');
-const { validateUpdateUser } = require('../middlewares/validation');
+const { validateUpdateUser, validateRegister, handleValidationErrors } = require('../middlewares/validation');
 const userController = require('../controllers/userController');
+
+// Ruta pública para crear usuarios
+userRouter.post('/register', validateRegister, handleValidationErrors, userController.createUser);
 
 //Admin
 userRouter.get("/admin", verifyToken, authorizeRoles("admin"), (req, res) => {

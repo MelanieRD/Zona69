@@ -58,48 +58,57 @@ const login = async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        // Buscar usuario
+        // Buscar usuario por username
         const user = await User.findOne({ username });
         if (!user) {
-            return res.status(404).json({ message: "Invalid credentials" });
+            return res.status(401).json({ message: 'Credenciales inválidas' });
         }
 
         // Verificar si el usuario está activo
         if (!user.isActive) {
-            return res.status(403).json({ message: "Account is deactivated" });
+            return res.status(403).json({ message: 'Usuario desactivado' });
         }
 
         // Verificar contraseña
-        const isPasswordCorrect = await bcrypt.compare(password, user.password);
-        if (!isPasswordCorrect) {
-            return res.status(400).json({ message: "Invalid credentials" });
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Credenciales inválidas' });
         }
+
+        // Generar token JWT
+        const token = jwt.sign(
+            { 
+                id: user._id,
+                username: user.username,
+                role: user.role 
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
+        );
 
         // Actualizar último login
         user.lastLogin = new Date();
         await user.save();
 
-        // Generar token
-        const token = jwt.sign(
-            { id: user._id, role: user.role },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
-        );
+        // No enviar la contraseña en la respuesta
+        const userResponse = {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            role: user.role,
+            isActive: user.isActive,
+            lastLogin: user.lastLogin
+        };
 
-        res.status(200).json({
+        res.json({
+            message: 'Inicio de sesión exitoso',
             token,
-            user: {
-                id: user._id,
-                username: user.username,
-                email: user.email,
-                role: user.role
-            }
+            user: userResponse
         });
-    } catch (err) {
-        console.error('Login error:', err);
+    } catch (error) {
         res.status(500).json({ 
-            message: "Error during login",
-            error: err.message 
+            message: 'Error al iniciar sesión', 
+            error: error.message 
         });
     }
 };

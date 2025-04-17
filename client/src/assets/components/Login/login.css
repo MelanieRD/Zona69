@@ -93,6 +93,14 @@
     font-size: 0.9rem;
 }
 
+.success-message {
+    color: #4CAF50;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
 .login-button {
     width: 100%;
     min-width: 200px;
