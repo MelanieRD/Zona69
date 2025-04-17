@@ -51,7 +51,7 @@ export const Cart = () => {
 
             <div className={`cart-dropdown ${isOpen ? 'open' : ''}`}>
                 <div className="cart-header">
-                    <h3>Your Cart</h3>
+                    <h3>Tu Carrito</h3>
                     <button 
                         className="close-cart"
                         onClick={() => setIsOpen(false)}
@@ -62,7 +62,7 @@ export const Cart = () => {
 
                 {cart.length === 0 ? (
                     <div className="empty-cart">
-                        <p>Your cart is empty</p>
+                        <p>Tu carrito está vacío</p>
                     </div>
                 ) : (
                     <>
@@ -75,9 +75,9 @@ export const Cart = () => {
                                         className="cart-item-image"
                                     />
                                     <div className="cart-item-details">
-                                        <h4>{item.product.name}</h4>
-                                        <p>Size: {item.size}</p>
-                                        <p>${item.product.price}</p>
+                                        <h4 className="cart-item-name">{item.product.name}</h4>
+                                        <p className="cart-item-size">Talla: {item.size}</p>
+                                        <p className="cart-item-price">${item.product.price}</p>
                                         <div className="quantity-controls">
                                             <button 
                                                 onClick={() => handleQuantityChange(
@@ -121,7 +121,7 @@ export const Cart = () => {
                                 className="checkout-btn"
                                 onClick={handleCheckout}
                             >
-                                Checkout via WhatsApp
+                                Comprar por WhatsApp
                             </button>
                         </div>
                     </>

@@ -1,11 +1,14 @@
 import "./Collections.css";
 import { Link } from "react-router-dom";
 import { BiCart } from "react-icons/bi";
+import { useCart } from "../../../context/CartContext";
 
 export const Collections = () => {
+    const { addToCart } = useCart();
+
     const newArrivals = [
         {
-            id: 1,
+            id: "vagina-realista-1",
             name: "Vagina realista",
             description: "Vagina realista, suave, con textura y diferentes niveles de vibración",
             price: "$2,500",
@@ -14,16 +17,16 @@ export const Collections = () => {
             isNew: true
         },
         {
-            id: 2,
+            id: "plug-metalico-2",
             name: "PLUG METÁLICO",
             description: "Plug metálico, duradero",
-            price: "$500",
+            price: "$2,500",
             image: "/images/nuevo/nuevo5.jpg",
             route: "/product/silk-robe",
             isNew: true
         },
         {
-            id: 3,
+            id: "realistic-dick-3",
             name: "RealisticDick",
             description: "Textura premium, para los golosos",
             price: "$1,500",
@@ -35,8 +38,14 @@ export const Collections = () => {
 
     const handleAddToCart = (e, item) => {
         e.preventDefault();
-        // Aquí iría la lógica para añadir al carrito
-        console.log("Añadiendo al carrito:", item);
+        const product = {
+            _id: item.id,
+            name: item.name,
+            price: parseFloat(item.price.replace('$', '')),
+            imageUrl: item.image,
+            description: item.description
+        };
+        addToCart(product, 'M', 1);
     };
 
     return (
