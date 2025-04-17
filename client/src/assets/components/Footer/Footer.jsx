@@ -1,13 +1,17 @@
-import { FaInstagram, FaFacebook, FaTwitter, FaPinterest, FaWhatsapp, FaEnvelope } from 'react-icons/fa';
+import { FaInstagram, FaFacebook, FaTwitter, FaPinterest, FaWhatsapp, FaEnvelope, FaUser } from 'react-icons/fa';
+import { useState } from "react";
+import { Login } from "../Login/Login";
 import "./footer.css";
 
 export const Footer = () => {
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
     const currentYear = new Date().getFullYear();
 
     const quickLinks = [
         { name: "Inicio", path: "/" },
         { name: "Catálogo", path: "/shop" },
-
+        { name: "Nosotros", path: "/about" },
+        { name: "Contacto", path: "/contact" }
     ];
 
     const customerService = [
@@ -80,7 +84,6 @@ export const Footer = () => {
                     </ul>
                 </div>
 
-
                 <div className="footer-section">
                     <h3 className="footer-title">Whatsapp</h3>
                     <div className="contact-methods">
@@ -124,8 +127,19 @@ export const Footer = () => {
                         ))}
                     </div>
                 </div>
-            </div>
 
+                <div className="footer-section">
+                    <div className="footer-links">
+                        <button 
+                            className="login-icon-button"
+                            onClick={() => setIsLoginOpen(true)}
+                            title="Iniciar sesión"
+                        >
+                            <FaUser />
+                        </button>
+                    </div>
+                </div>
+            </div>
 
             <div className="footer-bottom">
                 <p className="copyright">
@@ -137,6 +151,11 @@ export const Footer = () => {
                     <span className="payment-icon">💲</span>
                 </div>
             </div>
+
+            <Login 
+                isOpen={isLoginOpen}
+                onClose={() => setIsLoginOpen(false)}
+            />
         </footer>
     );
 };

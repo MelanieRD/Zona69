@@ -43,7 +43,7 @@ export const CategorySection = ({
     const categoriesToDisplay = categories.length > 0 ? categories : defaultCategories;
 
     const handleCategoryClick = (category) => {
-        navigate('/shop');
+        navigate(`/shop?category=${encodeURIComponent(category.name)}`);
         onCategoryClick(category);
     };
 
