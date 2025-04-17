@@ -5,6 +5,7 @@ import { Features } from "../../components/Features/Features"
 import { Newsletter } from "../../components/Newsletter/Newsletter"
 import { Collections } from "../../components/Collections/Collections"
 import AboutStore from "../../components/AboutStore/AboutStore"
+import { ScrollAnimation } from "../../components/ScrollAnimation/ScrollAnimation"
 import "./home.css"
 //changed al readyy
 
@@ -34,17 +35,27 @@ export const Home = ()=>{
                 <Carousel imgsURLS={carouselImages}/>
             </section>
 
-            <AboutStore />
+            <ScrollAnimation direction="up">
+                <AboutStore />
+            </ScrollAnimation>
 
-            <Features />
+            <ScrollAnimation direction="right" delay={200}>
+                <Features />
+            </ScrollAnimation>
 
-            <section className="categories-section">
-                <CategorySection/>
-            </section>
+            <ScrollAnimation direction="left" delay={400}>
+                <section className="categories-section">
+                    <CategorySection/>
+                </section>
+            </ScrollAnimation>
 
-            <Collections />
+            <ScrollAnimation direction="up" delay={600}>
+                <Collections />
+            </ScrollAnimation>
 
-            <Newsletter onSubmit={handleNewsletterSubmit} />
+            <ScrollAnimation direction="down" delay={800}>
+                <Newsletter onSubmit={handleNewsletterSubmit} />
+            </ScrollAnimation>
 
             <Footer/>
         </main>
