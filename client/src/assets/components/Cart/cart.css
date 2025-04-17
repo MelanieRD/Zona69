@@ -172,11 +172,12 @@
     align-items: center;
     gap: 0.5rem;
     margin-top: 0.5rem;
+    color: rgb(0, 0, 0);
 }
 
 .quantity-controls button {
     background: var(--primary-color);
-    color: white;
+    color: rgb(255, 255, 255);
     border: none;
     width: 24px;
     height: 24px;
@@ -190,6 +191,7 @@
 
 .quantity-controls button:hover {
     background: var(--hover-color);
+    color: rgb(255, 255, 255);
     transform: translateY(-2px);
 }
 
@@ -220,6 +222,7 @@
 }
 
 .cart-total {
+    color: var(--text-color);
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;

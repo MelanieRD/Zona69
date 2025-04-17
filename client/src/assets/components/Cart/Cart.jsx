@@ -87,7 +87,7 @@ export const Cart = () => {
                                                     -1
                                                 )}
                                             >
-                                                <HiMinus />
+                                                -
                                             </button>
                                             <span>{item.quantity}</span>
                                             <button 
@@ -98,7 +98,7 @@ export const Cart = () => {
                                                     1
                                                 )}
                                             >
-                                                <HiPlus />
+                                                +
                                             </button>
                                         </div>
                                     </div>

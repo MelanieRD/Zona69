@@ -1,6 +1,6 @@
 .collections-section {
     padding: 8rem 0;
-    background: linear-gradient(135deg, rgba(237, 186, 255, 0.8) 0%, rgba(82, 131, 255, 0.95) 100%);
+    background: linear-gradient(135deg, rgb(255, 255, 255) 0%, rgb(226, 177, 212) 100%);
     position: relative;
     overflow: hidden;
 }
@@ -102,7 +102,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, rgba(0, 0, 0, 0.2), transparent);
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.145), transparent);
     z-index: 1;
 }
 
