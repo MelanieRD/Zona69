@@ -59,7 +59,6 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    will-change: transform, opacity;
 }
 
 .feature-card {
@@ -74,7 +73,6 @@
     border: 1px solid rgba(107, 78, 255, 0.1);
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    will-change: transform, opacity;
 }
 
 .feature-card:hover {
