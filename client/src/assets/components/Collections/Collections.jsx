@@ -38,6 +38,7 @@ export const Collections = () => {
 
     const handleAddToCart = (e, item) => {
         e.preventDefault();
+        e.stopPropagation();
         const product = {
             _id: item.id,
             name: item.name,
@@ -58,35 +59,31 @@ export const Collections = () => {
                 
                 <div className="collections-grid">
                     {newArrivals.map((item) => (
-                        <Link 
-                            key={item.id} 
-                            to={item.route}
-                            className="collection-card"
-                        >
-                            <div className="collection-image">
+                        <div key={item.id} className="collection-card">
+                            <Link to={item.route} className="collection-image">
                                 <img src={item.image} alt={item.name} />
                                 {item.isNew && <span className="new-badge">Nuevo</span>}
-                                <div className="collection-overlay">
-                                    <div className="collection-info">
-                                        <h3>{item.name}</h3>
-                                        <p>{item.description}</p>
-                                        <span className="collection-price">{item.price}</span>
-                                    </div>
-                                    <div className="collection-actions">
-                                        <button 
-                                            className="collection-button"
-                                            onClick={(e) => handleAddToCart(e, item)}
-                                        >
-                                            <BiCart className="cart-icon" />
-                                            Añadir al carrito
-                                        </button>
-                                        <Link to={item.route} className="collection-button details">
-                                            Ver Detalles
-                                        </Link>
-                                    </div>
+                            </Link>
+                            <div className="collection-overlay">
+                                <div className="collection-info">
+                                    <h3>{item.name}</h3>
+                                    <p>{item.description}</p>
+                                    <span className="collection-price">{item.price}</span>
+                                </div>
+                                <div className="collection-actions">
+                                    <button 
+                                        className="collection-button"
+                                        onClick={(e) => handleAddToCart(e, item)}
+                                    >
+                                        <BiCart className="cart-icon" />
+                                        Añadir al carrito
+                                    </button>
+                                    <Link to={item.route} className="collection-button details">
+                                        Ver Detalles
+                                    </Link>
                                 </div>
                             </div>
-                        </Link>
+                        </div>
                     ))}
                 </div>
             </div>

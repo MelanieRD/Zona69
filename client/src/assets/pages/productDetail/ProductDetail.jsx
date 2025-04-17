@@ -12,6 +12,7 @@ export const ProductDetail = () => {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
+    const [selectedSize, setSelectedSize] = useState(null);
     const [isFavorite, setIsFavorite] = useState(false);
     const [showAddedMessage, setShowAddedMessage] = useState(false);
 
@@ -30,6 +31,10 @@ export const ProductDetail = () => {
             try {
                 const data = await getProductById(id);
                 setProduct(data);
+                // Si el producto tiene tallas disponibles, seleccionar la primera por defecto
+                if (data.size && data.size.length > 0) {
+                    setSelectedSize(data.size[0]);
+                }
             } catch (error) {
                 console.error("Error fetching product:", error);
             } finally {
@@ -47,13 +52,16 @@ export const ProductDetail = () => {
         }
     };
 
+    const handleSizeSelect = (size) => {
+        setSelectedSize(size);
+    };
+
     const handleAddToCart = () => {
-        if (!product.size) {
-            alert("This product doesn't have a size specified");
+        if (!selectedSize) {
+            alert("Por favor, selecciona una talla");
             return;
         }
-        
-        addToCart(product, product.size, quantity);
+        addToCart(product, selectedSize, quantity);
         setShowAddedMessage(true);
         
         setTimeout(() => {
@@ -73,11 +81,11 @@ export const ProductDetail = () => {
         <div className="product-detail-overlay" onClick={handleOverlayClick}>
             <div className="product-detail-container" onClick={e => e.stopPropagation()}>
                 <button className="back-button" onClick={handleBack}>
-                    <HiArrowLeft /> Back to Shop
+                    <HiArrowLeft /> Regresar
                 </button>
                 {showAddedMessage && (
                     <div className="added-to-cart-message">
-                        Added to cart successfully!
+                        Añadido al carrito correctamente!
                     </div>
                 )}
                 <div className="product-detail-grid">
@@ -104,15 +112,25 @@ export const ProductDetail = () => {
                             <p>{product.description}</p>
                         </div>
 
-                        <div className="size-display">
-                            <h3>Size</h3>
-                            <div className="size-value">
-                                {product.size || "Not specified"}
+                        {product.size && product.size.length > 0 && (
+                            <div className="size-selector">
+                                <h3>Talla</h3>
+                                <div className="size-options">
+                                    {product.size.map((size) => (
+                                        <button
+                                            key={size}
+                                            className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+                                            onClick={() => handleSizeSelect(size)}
+                                        >
+                                            {size}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
+                        )}
 
                         <div className="quantity-selector">
-                            <h3>Quantity</h3>
+                            <h3>Cantidad</h3>
                             <input
                                 type="number"
                                 min="1"
@@ -126,15 +144,15 @@ export const ProductDetail = () => {
                             className="add-to-cart-btn"
                             onClick={handleAddToCart}
                         >
-                            <HiShoppingCart /> Add to Cart
+                            <HiShoppingCart /> Añadir al carrito
                         </button>
 
                         <div className="product-details">
-                            <h3>Product Details</h3>
+                            <h3>Detalles del producto</h3>
                             <ul>
                                 <li><strong>Color:</strong> {product.color}</li>
                                 <li><strong>Material:</strong> {product.material || "Not specified"}</li>
-                                <li><strong>Category:</strong> {product.categoryTags?.join(", ") || "Not specified"}</li>
+                                <li><strong>Categoria:</strong> {product.categoryTags?.join(", ") || "Not specified"}</li>
                             </ul>
                         </div>
                     </div>

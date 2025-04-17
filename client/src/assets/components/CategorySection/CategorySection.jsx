@@ -1,14 +1,15 @@
 import { Category } from "../Category/Category";
 import "./categorySection.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const CategorySection = ({ 
     title = "Explora Nuestras Categorías",
     description = "Descubre una amplia selección de productos para todos los gustos",
     categories = [],
-    onCategoryClick = (category) => console.log("Category clicked:", category)
+    onCategoryClick = () => {}
 }) => {
+    const navigate = useNavigate();
     const defaultCategories = [
         {
             id: "vibradores",
@@ -41,6 +42,11 @@ export const CategorySection = ({
 
     const categoriesToDisplay = categories.length > 0 ? categories : defaultCategories;
 
+    const handleCategoryClick = (category) => {
+        navigate('/shop');
+        onCategoryClick(category);
+    };
+
     return (
         <section className="category-section">
             <div className="category-container">
@@ -51,21 +57,16 @@ export const CategorySection = ({
                 
                 <div className="categories-grid">
                     {categoriesToDisplay.map((category) => (
-                        <Link 
-                            key={category.id} 
-                            to={category.route}
-                            className="category-link"
-                        >
-                            <Category
-                                name={category.name}
-                                description={category.description}
-                                image={category.image}
-                                buttonText={category.buttonText}
-                                isLarge={category.isLarge}
-                                route={category.route}
-                                onCategoryClick={onCategoryClick}
-                            />
-                        </Link>
+                        <Category
+                            key={category.id}
+                            name={category.name}
+                            description={category.description}
+                            image={category.image}
+                            buttonText={category.buttonText}
+                            isLarge={category.isLarge}
+                            route={category.route}
+                            onCategoryClick={() => handleCategoryClick(category)}
+                        />
                     ))}
                 </div>
             </div>

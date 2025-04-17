@@ -34,15 +34,26 @@ export const Shop = () => {
     const sizes = [
         { sizeName: "XS", sizeDatabaseValue: "XS" },
         { sizeName: "S", sizeDatabaseValue: "S" },
+        { sizeName: "M", sizeDatabaseValue: "M" },
         { sizeName: "L", sizeDatabaseValue: "L" },
         { sizeName: "XXL", sizeDatabaseValue: "XXL" },
     ];
 
     const categories = [
-        { CategoryName: "Shirts", CategoryDatabaseValue: "Shirts" },
-        { CategoryName: "Pants", CategoryDatabaseValue: "Pants" },
-        { CategoryName: "Sweaters", CategoryDatabaseValue: "Sweet" },
-        { CategoryName: "Accessories", CategoryDatabaseValue: "Sour" },
+        { CategoryName: "Vibradores", CategoryDatabaseValue: "Vibrador" },
+        { CategoryName: "Lubricantes", CategoryDatabaseValue: "Lubricante" },
+        { CategoryName: "Accesorios", CategoryDatabaseValue: "Accesorio" },
+        { CategoryName: "Preservativos", CategoryDatabaseValue: "Preservativos" },
+        { CategoryName: "Inflables", CategoryDatabaseValue: "Inflable" },
+        { CategoryName: "Juguetes", CategoryDatabaseValue: "Juguete" },
+        { CategoryName: "Realistas", CategoryDatabaseValue: "Realista" },
+        { CategoryName: "Dildos", CategoryDatabaseValue: "Dildo" },
+        { CategoryName: "Baterías", CategoryDatabaseValue: "Batería" },
+        { CategoryName: "Cremas", CategoryDatabaseValue: "Cremas" },
+        { CategoryName: "Vaginas", CategoryDatabaseValue: "Vagina" },
+        { CategoryName: "Masajeadores", CategoryDatabaseValue: "Masajeador" },
+        { CategoryName: "Consumibles", CategoryDatabaseValue: "Consumible" },
+        
     ];
 
     const handleColorFilter = (value) => {
@@ -133,7 +144,7 @@ export const Shop = () => {
             <div className="shop-container">
                 <div className={`shop-products-filters ${isFilterOpen ? 'open' : ''}`}>
                     <div className="filter-section">
-                        <h5>Colors</h5>
+                        <h5>Colores</h5>
                         <div className="section-filter colors-filter">
                             <div
                                 className={`color-filter-circle multicolor ${!filters.color ? 'active' : ''}`}
@@ -152,13 +163,13 @@ export const Shop = () => {
                     </div>
 
                     <div className="filter-section">
-                        <h5>Size</h5>
+                        <h5>Tamaños</h5>
                         <div className="section-filter size-filter">
                             <button
                                 className={!filters.size ? 'active' : ''}
                                 onClick={() => handleSizeFilter("")}
                             >
-                                All Sizes
+                                Todo
                             </button>
                             {sizes.map((size, index) => (
                                 <button
@@ -173,13 +184,13 @@ export const Shop = () => {
                     </div>
 
                     <div className="filter-section">
-                        <h5>Categories</h5>
+                        <h5>Categorias</h5>
                         <div className="section-filter categories-filter">
                             <button
                                 className={!filters.categoryTags ? 'active' : ''}
                                 onClick={() => handleCategoryFilter("")}
                             >
-                                All
+                                Todas
                             </button>
                             {categories.map((category, index) => (
                                 <button
