@@ -4,7 +4,11 @@
     position: relative;
     overflow: hidden;
 }
-
+.logo-about {
+    width: 50vw;
+    object-fit: cover;
+ 
+}
 .about-store::before,
 .about-store::after {
     content: '';
@@ -43,6 +47,7 @@
 .about-content {
     display: flex;
     flex-direction: column;
+    margin: 3rem;
     gap: 2rem;
 }
 
@@ -64,8 +69,6 @@
 
 .store-info {
     display: grid;
-   
-    gap: 2rem;
     margin-top: 1rem;
 }
 
@@ -110,7 +113,8 @@
     position: relative;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transform-origin: center;
+    will-change: transform;
 }
 
 .store-image img {
@@ -121,7 +125,29 @@
 }
 
 .store-image:hover img {
-    transform: scale(1.05);
+    transform: scale(1.03);
+}
+
+.store-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.store-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    pointer-events: none;
 }
 
 @media (max-width: 1024px) {
