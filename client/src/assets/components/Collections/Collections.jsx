@@ -1,5 +1,6 @@
 import "./Collections.css";
 import { Link } from "react-router-dom";
+import { BiCart } from "react-icons/bi";
 
 export const Collections = () => {
     const newArrivals = [
@@ -32,6 +33,12 @@ export const Collections = () => {
         }
     ];
 
+    const handleAddToCart = (e, item) => {
+        e.preventDefault();
+        // Aquí iría la lógica para añadir al carrito
+        console.log("Añadiendo al carrito:", item);
+    };
+
     return (
         <section className="collections-section">
             <div className="collections-container">
@@ -56,7 +63,18 @@ export const Collections = () => {
                                         <p>{item.description}</p>
                                         <span className="collection-price">{item.price}</span>
                                     </div>
-                                    <button className="collection-button">Ver Detalles</button>
+                                    <div className="collection-actions">
+                                        <button 
+                                            className="collection-button"
+                                            onClick={(e) => handleAddToCart(e, item)}
+                                        >
+                                            <BiCart className="cart-icon" />
+                                            Añadir al carrito
+                                        </button>
+                                        <Link to={item.route} className="collection-button details">
+                                            Ver Detalles
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </Link>

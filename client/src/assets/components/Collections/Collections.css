@@ -1,6 +1,6 @@
 .collections-section {
     padding: 8rem 0;
-    background: linear-gradient(135deg, rgba(5, 7, 12, 0.8) 0%, rgba(5, 7, 12, 0.95) 100%);
+    background: linear-gradient(135deg, rgba(237, 186, 255, 0.8) 0%, rgba(82, 131, 255, 0.95) 100%);
     position: relative;
     overflow: hidden;
 }
@@ -48,7 +48,6 @@
     font-weight: 800;
     background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     margin-bottom: 1.5rem;
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -200,32 +199,45 @@
     transform: translateY(0);
 }
 
+.collection-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
 .collection-button {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 1.1rem 2.5rem;
-    background: linear-gradient(135deg, #7B2FBF 0%, #9B4FCF 100%);
+    padding: 0.8rem 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
     color: white;
-    border: none;
-    border-radius: 35px;
-    font-size: 1.1rem;
     font-weight: 600;
-    cursor: pointer;
+    text-decoration: none;
     transition: all 0.3s ease;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
-}
-
-.collection-card:hover .collection-button {
-    opacity: 1;
-    transform: translateY(0);
+    font-size: 0.9rem;
+    cursor: pointer;
 }
 
 .collection-button:hover {
-    transform: translateX(5px) scale(1.05);
-    box-shadow: 0 5px 15px rgba(123, 47, 191, 0.4);
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.collection-button.details {
+    background: linear-gradient(135deg, #7B2FBF 0%, #9B4FCF 100%);
+    border: none;
+}
+
+.collection-button.details:hover {
+    background: linear-gradient(135deg, #9B4FCF 0%, #7B2FBF 100%);
+}
+
+.cart-icon {
+    font-size: 1.2rem;
 }
 
 @media (max-width: 1400px) {

@@ -36,32 +36,7 @@ export const CategorySection = ({
             buttonText: "Explorar",
             isLarge: false,
             route: "/category/juguetes"
-        },{
-            id: "juguetes",
-            name: "Juguetes",
-            description: "Descubre juguetes realistas para experiencias únicas",
-            image: "/images/categorias/categoria3.jpg",
-            buttonText: "Explorar",
-            isLarge: false,
-            route: "/category/juguetes"
-        },
-        {
-            id: "juguetes",
-            name: "Juguetes",
-            description: "Descubre juguetes realistas para experiencias únicas",
-            image: "/images/categorias/categoria3.jpg",
-            buttonText: "Explorar",
-            isLarge: false,
-            route: "/category/juguetes"
-        },{
-        id: "juguetes",
-        name: "Juguetes",
-        description: "Descubre juguetes realistas para experiencias únicas",
-        image: "/images/categorias/categoria3.jpg",
-        buttonText: "Explorar",
-        isLarge: false,
-        route: "/category/juguetes"
-    }
+        }
     ];
 
     const categoriesToDisplay = categories.length > 0 ? categories : defaultCategories;
