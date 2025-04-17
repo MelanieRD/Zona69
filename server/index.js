@@ -29,8 +29,5 @@ app.get("/", (req, res) => {
     res.send("API funcionando en Vercel 🚀");
 });
 
-app.get("/hola", (req, res) => {
-    res.send("HOLA, probando la ruta");
-});
 
 module.exports = app;
