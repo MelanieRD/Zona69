@@ -20,9 +20,9 @@ const productSchema = new mongoose.Schema({
     color:{
         type: String,
     },
-    size:{
+    size:[{
         type: String,
-    },
+    }],
     rating:{
         type: Number,
     },
