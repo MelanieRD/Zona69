@@ -45,7 +45,7 @@ export const CategorySection = ({
         <section className="category-section">
             <div className="category-container">
                 <div className="section-header">
-                    <h2 className="section-title">{title}</h2>
+                    <h2 className="a-section-title">{title}</h2>
                     <p className="section-subtitle">{description}</p>
                 </div>
                 

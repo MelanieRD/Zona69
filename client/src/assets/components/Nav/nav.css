@@ -58,11 +58,7 @@
 
 .nav-link {
     color: #000000;
-    text-shadow: 
-        -0.5px -0.5px 0 #fff,
-        0.5px -0.5px 0 #fff,
-        -0.5px 0.5px 0 #fff,
-        0.5px 0.5px 0 #fff;
+   
     text-decoration: none;
     font-weight:bolder;
    
