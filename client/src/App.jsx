@@ -14,28 +14,31 @@ function App() {
   const dataContext = createContext();
   const [data, setData] = useState([]);
  
-  const handleShopItems = async () => {
-    let dataGettedFromFetch = await getListItems();
-    if(dataGettedFromFetch.length > 0) {
-      setData(dataGettedFromFetch);
-    }
-  }
 
-  useEffect(() => {
-    handleShopItems();
-  }, [])
+ const handleShopItems = async () => {
+    let dataGettedFromFetch =  await getListItems();
+
+    if(dataGettedFromFetch.length > 0){
+      setData(dataGettedFromFetch);
+      console.log(dataGettedFromFetch);
+  }}
+
+
+useEffect(() => {
+  handleShopItems();
+  
+}, [])
 
   return (
     <CartProvider>
       <dataContext.Provider value={data}>
         <Nav />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop dataShop={data} />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/product/new" element={<AddProduct />} />
-          <Route path="*" element={<Home />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<Shop dataShop={data} />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/product/new" element={<AddProduct />} />
+          </Routes>
       </dataContext.Provider>
     </CartProvider>
   )

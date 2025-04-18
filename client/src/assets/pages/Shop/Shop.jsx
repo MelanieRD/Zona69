@@ -7,7 +7,7 @@ import { getProductsWithLimit } from "../../utils/shopUtils";
 import { FaFilter, FaChevronLeft, FaChevronRight, FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-export const Shop = ({ dataShop }) => {
+export const Shop = () => {
     const [productPage, setProductPage] = useState(0);
     const [productsDataLimited, setProductsDataLimited] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0);
@@ -18,46 +18,6 @@ export const Shop = ({ dataShop }) => {
    
     const productsPerPage = 6;
     const pages = Math.ceil(totalProducts / productsPerPage);
-
-    const getLimitNumOfProducts = async () => {
-        try {
-            const dataProducts = await getProductsWithLimit(
-                productPage * productsPerPage,
-                productsPerPage
-            );
-            setProductsDataLimited(dataProducts.products || []);
-            setTotalProducts(dataProducts.totalProducts || 0);
-        } catch (error) {
-            console.error("Error fetching products:", error);
-            setProductsDataLimited([]);
-            setTotalProducts(0);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        const userData = localStorage.getItem('user');
-        if (userData) {
-            try {
-                const user = JSON.parse(userData);
-                setIsAdmin(user.role === 'admin' || user.role === 'superadmin');
-            } catch (error) {
-                console.error('Error parsing user data:', error);
-                setIsAdmin(false);
-            }
-        }
-    }, []);
-
-    useEffect(() => {
-        if (dataShop && dataShop.length > 0) {
-            setProductsDataLimited(dataShop);
-            setTotalProducts(dataShop.length);
-            setIsLoading(false);
-        } else {
-            getLimitNumOfProducts();
-        }
-    }, [dataShop, productPage]);
 
     const handleProductDeleted = (deletedProductId) => {
         setProductsDataLimited(prevProducts => 
@@ -143,6 +103,23 @@ export const Shop = ({ dataShop }) => {
         setProductPage(0);
     };
 
+    const getLimitNumOfProducts = async () => {
+        setIsLoading(true);
+        try {
+            const dataProducts = await getProductsWithLimit(
+                productPage * productsPerPage,
+                productsPerPage,
+                filters
+            );
+            setProductsDataLimited(dataProducts.products);
+            setTotalProducts(dataProducts.totalProducts);
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const handleProductPage = (num) => {
         setProductPage(num);
     };
@@ -159,9 +136,59 @@ export const Shop = ({ dataShop }) => {
         }
     };
 
+    useEffect(() => {
+        getLimitNumOfProducts();
+    }, [productPage, filters]);
+
+    useEffect(() => {
+        // Verificar si el usuario es administrador
+        const userData = localStorage.getItem('user');
+        if (userData) {
+            try {
+                const user = JSON.parse(userData);
+                setIsAdmin(user.role === 'admin' || user.role === 'superadmin');
+            } catch (error) {
+                console.error('Error parsing user data:', error);
+                setIsAdmin(false);
+            }
+        }
+    }, []);
+
     const handleAddProduct = () => {
         navigate('/product/new');
     };
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/app/products/all`);
+                if (!response.ok) {
+                    throw new Error('Error al cargar los productos');
+                }
+                const data = await response.json();
+                setProductsDataLimited(data);
+                setTotalProducts(data.length);
+            } catch (error) {
+                console.error('Error:', error);
+                setProductsDataLimited([]);
+                setTotalProducts(0);
+            }
+        };
+
+        fetchProducts();
+
+        // Añadir listener para el evento productsUpdated
+        const handleProductsUpdated = () => {
+            fetchProducts();
+        };
+
+        window.addEventListener('productsUpdated', handleProductsUpdated);
+
+        // Limpiar el listener cuando el componente se desmonte
+        return () => {
+            window.removeEventListener('productsUpdated', handleProductsUpdated);
+        };
+    }, []);
 
     return (
         <div className="shop-page">
