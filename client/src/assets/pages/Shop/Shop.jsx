@@ -151,36 +151,6 @@ export const Shop = () => {
         navigate('/product/new');
     };
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/app/products`);
-                if (!response.ok) {
-                    throw new Error('Error al cargar los productos');
-                }
-                const data = await response.json();
-                setProductsDataLimited(data.products);
-                setTotalProducts(data.totalProducts);
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        };
-
-        fetchProducts();
-
-        // Añadir listener para el evento productsUpdated
-        const handleProductsUpdated = () => {
-            fetchProducts();
-        };
-
-        window.addEventListener('productsUpdated', handleProductsUpdated);
-
-        // Limpiar el listener cuando el componente se desmonte
-        return () => {
-            window.removeEventListener('productsUpdated', handleProductsUpdated);
-        };
-    }, []);
-
     return (
         <div className="shop-page">
             <div className="shop-header">
