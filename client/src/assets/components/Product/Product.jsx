@@ -33,7 +33,12 @@ export const Product = ({addClass, productName, productDesc, productPrice, imgSr
     const getImageUrl = () => {
         if (!imgSrc) return 'https://placehold.co/600x400?text=No+Image';
         if (imgSrc.startsWith('http')) return imgSrc;
-        return `${import.meta.env.VITE_API_URL}${imgSrc}`;
+        // Asegurarse de que la URL base termine con / y la ruta de la imagen no empiece con /
+        const baseUrl = import.meta.env.VITE_API_URL.endsWith('/') 
+            ? import.meta.env.VITE_API_URL.slice(0, -1) 
+            : import.meta.env.VITE_API_URL;
+        const imagePath = imgSrc.startsWith('/') ? imgSrc : `/${imgSrc}`;
+        return `${baseUrl}${imagePath}`;
     };
 
     const handleProductClick = () => {
