@@ -64,7 +64,6 @@ export const Shop = () => {
         { CategoryName: "Vaginas", CategoryDatabaseValue: "Vagina" },
         { CategoryName: "Masajeadores", CategoryDatabaseValue: "Masajeador" },
         { CategoryName: "Consumibles", CategoryDatabaseValue: "Consumible" },
-        
     ];
 
     const handleColorFilter = (value) => {
@@ -115,6 +114,8 @@ export const Shop = () => {
             setTotalProducts(dataProducts.totalProducts);
         } catch (error) {
             console.error("Error fetching products:", error);
+            setProductsDataLimited([]);
+            setTotalProducts(0);
         } finally {
             setIsLoading(false);
         }
@@ -158,44 +159,24 @@ export const Shop = () => {
         navigate('/product/new');
     };
 
+    // Añadir listener para el evento productsUpdated
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/app/products/all`);
-                if (!response.ok) {
-                    throw new Error('Error al cargar los productos');
-                }
-                const data = await response.json();
-                setProductsDataLimited(data);
-                setTotalProducts(data.length);
-            } catch (error) {
-                console.error('Error:', error);
-                setProductsDataLimited([]);
-                setTotalProducts(0);
-            }
-        };
-
-        fetchProducts();
-
-        // Añadir listener para el evento productsUpdated
         const handleProductsUpdated = () => {
-            fetchProducts();
+            getLimitNumOfProducts();
         };
 
         window.addEventListener('productsUpdated', handleProductsUpdated);
 
-        // Limpiar el listener cuando el componente se desmonte
         return () => {
             window.removeEventListener('productsUpdated', handleProductsUpdated);
         };
-    }, []);
+    }, [productPage, filters]);
 
     return (
         <div className="shop-page">
             <div className="shop-header">
                 <br />
                 <div className="header-actions">
-                    
                     <button 
                         className="filter-toggle"
                         onClick={() => setIsFilterOpen(!isFilterOpen)}
@@ -211,16 +192,12 @@ export const Shop = () => {
                             <FaPlus /> Add Product
                         </button>
                     )}
-                   
                 </div>
             </div>
 
             <div className="shop-container">
-                
-                
                 <div className={`shop-products-filters ${isFilterOpen ? 'open' : ''}`}>
                     <div className="filter-section">
-                        
                         <h5>Colores</h5>
                         <div className="section-filter colors-filter">
                             <div
