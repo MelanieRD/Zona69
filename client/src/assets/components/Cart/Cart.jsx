@@ -34,7 +34,7 @@ export const Cart = () => {
     };
 
     return (
-        <li 
+        <div 
             className="nav-icon-item"
             onMouseEnter={() => setIsOpen(true)}
             onMouseLeave={() => setIsOpen(false)}
@@ -65,7 +65,7 @@ export const Cart = () => {
                         <p>Tu carrito está vacío</p>
                     </div>
                 ) : (
-                    <>
+                    <div className="cart-content">
                         <div className="cart-items">
                             {cart.map((item, index) => (
                                 <div key={`${item.product._id}-${item.size}-${index}`} className="cart-item">
@@ -124,9 +124,9 @@ export const Cart = () => {
                                 Comprar por WhatsApp
                             </button>
                         </div>
-                    </>
+                    </div>
                 )}
             </div>
-        </li>
+        </div>
     );
 }; 

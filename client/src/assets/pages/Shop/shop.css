@@ -10,17 +10,35 @@
 }
 
 .shop-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d1b3b 100%);
     padding: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-    background-color: var(--light-bg);
+    position: relative;
+    overflow: hidden;
+}
+
+.shop-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%);
+    background-size: 20px 20px;
+    opacity: 0.1;
+    z-index: 0;
 }
 
 .shop-header {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
     flex-wrap: wrap;
     gap: 1rem;
 }
@@ -50,6 +68,8 @@
 }
 
 .shop-container {
+    position: relative;
+    z-index: 1;
     display: flex;
     gap: 2rem;
     width: 100%;
