@@ -19,6 +19,13 @@ export const Shop = () => {
     const productsPerPage = 6;
     const pages = Math.ceil(totalProducts / productsPerPage);
 
+    const handleProductDeleted = (deletedProductId) => {
+        setProductsDataLimited(prevProducts => 
+            prevProducts.filter(product => product._id !== deletedProductId)
+        );
+        setTotalProducts(prev => prev - 1);
+    };
+
     // FILTERS 
     const [filters, setFilters] = useState({});
 
@@ -282,7 +289,7 @@ export const Shop = () => {
                     ) : (
                         <>
                             <div className="products-grid">
-                                {productsDataLimited.map((product, index) => (
+                                {productsDataLimited.slice(0, productsPerPage).map((product, index) => (
                                     <Product
                                         key={index}
                                         productName={product.name}
@@ -290,39 +297,42 @@ export const Shop = () => {
                                         productDesc={product.description}
                                         imgSrc={product.imageUrl}
                                         id={product._id}
+                                        onProductDeleted={handleProductDeleted}
                                     />
                                 ))}
                             </div>
 
-                            <div className="pagination">
-                                <button
-                                    className="pagination-btn prev"
-                                    onClick={handlePrevProductPage}
-                                    disabled={productPage === 0}
-                                >
-                                    <FaChevronLeft /> Previous
-                                </button>
-                                
-                                <div className="pagination-numbers">
-                                    {Array.from({ length: pages }, (_, i) => (
-                                        <button
-                                            key={i}
-                                            className={`pagination-btn ${productPage === i ? 'active' : ''}`}
-                                            onClick={() => handleProductPage(i)}
-                                        >
-                                            {i + 1}
-                                        </button>
-                                    ))}
-                                </div>
+                            {pages > 1 && (
+                                <div className="pagination">
+                                    <button
+                                        className="pagination-btn prev"
+                                        onClick={handlePrevProductPage}
+                                        disabled={productPage === 0}
+                                    >
+                                        <FaChevronLeft /> Previous
+                                    </button>
+                                    
+                                    <div className="pagination-numbers">
+                                        {Array.from({ length: pages }, (_, i) => (
+                                            <button
+                                                key={i}
+                                                className={`pagination-btn ${productPage === i ? 'active' : ''}`}
+                                                onClick={() => handleProductPage(i)}
+                                            >
+                                                {i + 1}
+                                            </button>
+                                        ))}
+                                    </div>
 
-                                <button
-                                    className="pagination-btn next"
-                                    onClick={handleNextProductPage}
-                                    disabled={productPage === pages - 1}
-                                >
-                                    Next <FaChevronRight />
-                                </button>
-                            </div>
+                                    <button
+                                        className="pagination-btn next"
+                                        onClick={handleNextProductPage}
+                                        disabled={productPage === pages - 1}
+                                    >
+                                        Next <FaChevronRight />
+                                    </button>
+                                </div>
+                            )}
                         </>
                     )}
                 </div>
