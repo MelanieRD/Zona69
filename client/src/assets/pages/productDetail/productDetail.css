@@ -239,109 +239,20 @@
     color: var(--secondary-color);
 }
 
-.loading-container, .error-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 70vh;
-    gap: 1.5rem;
-    text-align: center;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    margin: 2rem;
-}
-
 .loading-spinner {
-    width: 60px;
-    height: 60px;
-    border: 4px solid rgba(66, 153, 225, 0.1);
-    border-top: 4px solid #4299e1;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    position: relative;
-}
-
-.loading-spinner::after {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: -8px;
-    right: -8px;
-    bottom: -8px;
-    border: 4px solid rgba(66, 153, 225, 0.05);
-    border-radius: 50%;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.loading-container p {
-    color: #4a5568;
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin-top: 1rem;
-    animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 0.6; }
-    50% { opacity: 1; }
-    100% { opacity: 0.6; }
-}
-
-.error-container {
-    background: rgba(255, 255, 255, 0.95);
-}
-
-.error-icon {
-    width: 64px;
-    height: 64px;
-    background: #fee2e2;
-    border-radius: 50%;
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin-bottom: 1rem;
-}
-
-.error-icon svg {
-    width: 32px;
-    height: 32px;
-    color: #e53e3e;
+    align-items: center;
+    min-height: 400px;
+    font-size: 1.2rem;
+    color: var(--accent-color);
 }
 
 .error-message {
-    color: #e53e3e;
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.error-container p {
-    color: #4a5568;
-    font-size: 1.1rem;
-    line-height: 1.5;
-}
-
-.error-container .redirect-message {
-    color: #718096;
-    font-size: 0.9rem;
-    margin-top: 1rem;
-    animation: fadeInOut 2s ease-in-out infinite;
-}
-
-@keyframes fadeInOut {
-    0% { opacity: 0.5; }
-    50% { opacity: 1; }
-    100% { opacity: 0.5; }
+    text-align: center;
+    padding: 2rem;
+    color: var(--error-color);
+    font-size: 1.2rem;
 }
 
 .back-button {
@@ -397,25 +308,6 @@
 
     .add-to-cart-btn {
         padding: 0.8rem 1.5rem;
-    }
-
-    .loading-container, .error-container {
-        margin: 1rem;
-        padding: 1.5rem;
-        min-height: 60vh;
-    }
-
-    .loading-spinner {
-        width: 50px;
-        height: 50px;
-    }
-
-    .error-message {
-        font-size: 1.2rem;
-    }
-
-    .error-container p {
-        font-size: 1rem;
     }
 }
 

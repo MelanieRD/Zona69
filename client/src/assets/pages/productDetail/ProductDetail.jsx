@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProductById } from "../../utils/shopUtils";
-import { HiHeart, HiShoppingCart, HiArrowLeft, HiPencil, HiExclamationCircle } from "react-icons/hi";
+import { HiHeart, HiShoppingCart, HiArrowLeft, HiPencil } from "react-icons/hi";
 import { useCart } from "../../../context/CartContext";
 import "./productDetail.css";
 
@@ -18,7 +18,6 @@ export const ProductDetail = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedProduct, setEditedProduct] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         // Verificar si el usuario es administrador
@@ -37,7 +36,7 @@ export const ProductDetail = () => {
     }, []);
 
     const handleBack = () => {
-        navigate('/shop', { replace: true });
+        navigate(-1);
     };
 
     const handleOverlayClick = (e) => {
@@ -49,18 +48,7 @@ export const ProductDetail = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                setLoading(true);
-                setError(null);
                 const data = await getProductById(id);
-                
-                if (!data || data.error) {
-                    setError("Producto no encontrado");
-                    setTimeout(() => {
-                        navigate('/shop', { replace: true });
-                    }, 2000);
-                    return;
-                }
-                
                 setProduct(data);
                 setEditedProduct(data);
                 if (data.size && data.size.length > 0) {
@@ -68,17 +56,13 @@ export const ProductDetail = () => {
                 }
             } catch (error) {
                 console.error("Error fetching product:", error);
-                setError("Error al cargar el producto");
-                setTimeout(() => {
-                    navigate('/shop', { replace: true });
-                }, 2000);
             } finally {
                 setLoading(false);
             }
         };
 
         fetchProduct();
-    }, [id, navigate]);
+    }, [id]);
 
     const handleQuantityChange = (e) => {
         const value = parseInt(e.target.value);
@@ -110,6 +94,7 @@ export const ProductDetail = () => {
 
     const handleSave = async () => {
         try {
+            // Aquí iría la lógica para guardar los cambios en el backend
             const response = await fetch(`${import.meta.env.VITE_API_URL}/app/products/${id}`, {
                 method: 'PUT',
                 headers: {
@@ -128,10 +113,7 @@ export const ProductDetail = () => {
             setIsEditing(false);
         } catch (error) {
             console.error('Error al guardar:', error);
-            setError('Error al guardar los cambios');
-            setTimeout(() => {
-                navigate('/shop', { replace: true });
-            }, 2000);
+            alert('Error al guardar los cambios');
         }
     };
 
@@ -148,30 +130,12 @@ export const ProductDetail = () => {
         }));
     };
 
-    if (error) {
-        return (
-            <div className="error-container">
-                <div className="error-icon">
-                    <HiExclamationCircle />
-                </div>
-                <p className="error-message">{error}</p>
-                <p>Redirigiendo a la tienda...</p>
-                <p className="redirect-message">Serás redirigido automáticamente</p>
-            </div>
-        );
-    }
-
     if (loading) {
-        return (
-            <div className="loading-container">
-                <div className="loading-spinner"></div>
-                <p>Cargando producto...</p>
-            </div>
-        );
+        return <div className="loading-spinner">Loading...</div>;
     }
 
     if (!product) {
-        return null;
+        return <div className="error-message">Product not found</div>;
     }
 
     return (
@@ -179,7 +143,7 @@ export const ProductDetail = () => {
             <div className="product-detail-container" onClick={e => e.stopPropagation()}>
                 <div className="product-detail-header">
                     <button className="back-button" onClick={handleBack}>
-                        <HiArrowLeft /> Volver a la tienda
+                        <HiArrowLeft /> Regresar
                     </button>
                     {isAdmin && !isEditing && (
                         <button className="edit-button" onClick={handleEdit}>
@@ -189,7 +153,7 @@ export const ProductDetail = () => {
                 </div>
                 {showAddedMessage && (
                     <div className="added-to-cart-message">
-                        ¡Añadido al carrito correctamente!
+                        Añadido al carrito correctamente!
                     </div>
                 )}
                 <div className="product-detail-grid">
