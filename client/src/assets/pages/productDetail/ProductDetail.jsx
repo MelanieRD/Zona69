@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProductById } from "../../utils/shopUtils";
-import { HiHeart, HiShoppingCart, HiArrowLeft, HiPencil } from "react-icons/hi";
+import { HiHeart, HiShoppingCart, HiArrowLeft, HiPencil, HiExclamationCircle } from "react-icons/hi";
 import { useCart } from "../../../context/CartContext";
 import "./productDetail.css";
 
@@ -18,6 +18,7 @@ export const ProductDetail = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedProduct, setEditedProduct] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         // Verificar si el usuario es administrador
@@ -48,7 +49,15 @@ export const ProductDetail = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
+                setLoading(true);
                 const data = await getProductById(id);
+                if (!data) {
+                    setError("Producto no encontrado");
+                    setTimeout(() => {
+                        navigate('/shop');
+                    }, 2000);
+                    return;
+                }
                 setProduct(data);
                 setEditedProduct(data);
                 if (data.size && data.size.length > 0) {
@@ -56,13 +65,17 @@ export const ProductDetail = () => {
                 }
             } catch (error) {
                 console.error("Error fetching product:", error);
+                setError("Error al cargar el producto");
+                setTimeout(() => {
+                    navigate('/shop');
+                }, 2000);
             } finally {
                 setLoading(false);
             }
         };
 
         fetchProduct();
-    }, [id]);
+    }, [id, navigate]);
 
     const handleQuantityChange = (e) => {
         const value = parseInt(e.target.value);
@@ -130,12 +143,30 @@ export const ProductDetail = () => {
         }));
     };
 
+    if (error) {
+        return (
+            <div className="error-container">
+                <div className="error-icon">
+                    <HiExclamationCircle />
+                </div>
+                <p className="error-message">{error}</p>
+                <p>Redirigiendo a la tienda...</p>
+                <p className="redirect-message">Serás redirigido automáticamente</p>
+            </div>
+        );
+    }
+
     if (loading) {
-        return <div className="loading-spinner">Loading...</div>;
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <p>Cargando producto...</p>
+            </div>
+        );
     }
 
     if (!product) {
-        return <div className="error-message">Product not found</div>;
+        return null;
     }
 
     return (
