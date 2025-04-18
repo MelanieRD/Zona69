@@ -78,6 +78,9 @@ export const Collections = () => {
                                         <BiCart className="cart-icon" />
                                         Añadir al carrito
                                     </button>
+                                    <Link to={item.route} className="collection-button details">
+                                        Ver Detalles
+                                    </Link>
                                 </div>
                             </div>
                         </div>

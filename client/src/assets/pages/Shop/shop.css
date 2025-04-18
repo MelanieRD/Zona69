@@ -11,8 +11,7 @@
 
 .shop-page {
     min-height: 100vh;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d1b3b 100%);
-    padding: 2rem;
+    background-color: var(--light-bg);    
     position: relative;
     overflow: hidden;
 }

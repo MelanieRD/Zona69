@@ -1,7 +1,8 @@
 import "./shop.css";
 import "./shop-products-List.css";
 import { Product } from "../../components/Product/Product";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { set } from "mongoose";
 import { getProductsWithLimit } from "../../utils/shopUtils";
 import { FaFilter, FaChevronLeft, FaChevronRight, FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -56,6 +57,7 @@ export const Shop = () => {
         { CategoryName: "Vaginas", CategoryDatabaseValue: "Vagina" },
         { CategoryName: "Masajeadores", CategoryDatabaseValue: "Masajeador" },
         { CategoryName: "Consumibles", CategoryDatabaseValue: "Consumible" },
+        
     ];
 
     const handleColorFilter = (value) => {
@@ -102,14 +104,10 @@ export const Shop = () => {
                 productsPerPage,
                 filters
             );
-            if (dataProducts && dataProducts.products) {
-                setProductsDataLimited(dataProducts.products);
-                setTotalProducts(dataProducts.totalProducts || 0);
-            }
+            setProductsDataLimited(dataProducts.products);
+            setTotalProducts(dataProducts.totalProducts);
         } catch (error) {
             console.error("Error fetching products:", error);
-            setProductsDataLimited([]);
-            setTotalProducts(0);
         } finally {
             setIsLoading(false);
         }
@@ -131,13 +129,12 @@ export const Shop = () => {
         }
     };
 
-    // Efecto principal para cargar productos
     useEffect(() => {
         getLimitNumOfProducts();
     }, [productPage, filters]);
 
-    // Efecto para verificar el rol de administrador
     useEffect(() => {
+        // Verificar si el usuario es administrador
         const userData = localStorage.getItem('user');
         if (userData) {
             try {
@@ -150,28 +147,46 @@ export const Shop = () => {
         }
     }, []);
 
-    // Efecto para manejar actualizaciones de productos
+    const handleAddProduct = () => {
+        navigate('/product/new');
+    };
+
     useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/app/products`);
+                if (!response.ok) {
+                    throw new Error('Error al cargar los productos');
+                }
+                const data = await response.json();
+                setProductsDataLimited(data.products);
+                setTotalProducts(data.totalProducts);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchProducts();
+
+        // Añadir listener para el evento productsUpdated
         const handleProductsUpdated = () => {
-            getLimitNumOfProducts();
+            fetchProducts();
         };
 
         window.addEventListener('productsUpdated', handleProductsUpdated);
 
+        // Limpiar el listener cuando el componente se desmonte
         return () => {
             window.removeEventListener('productsUpdated', handleProductsUpdated);
         };
-    }, [productPage, filters]);
-
-    const handleAddProduct = () => {
-        navigate('/product/new');
-    };
+    }, []);
 
     return (
         <div className="shop-page">
             <div className="shop-header">
                 <br />
                 <div className="header-actions">
+                    
                     <button 
                         className="filter-toggle"
                         onClick={() => setIsFilterOpen(!isFilterOpen)}
@@ -187,12 +202,16 @@ export const Shop = () => {
                             <FaPlus /> Add Product
                         </button>
                     )}
+                   
                 </div>
             </div>
 
             <div className="shop-container">
+                
+                
                 <div className={`shop-products-filters ${isFilterOpen ? 'open' : ''}`}>
                     <div className="filter-section">
+                        
                         <h5>Colores</h5>
                         <div className="section-filter colors-filter">
                             <div
@@ -253,6 +272,7 @@ export const Shop = () => {
                         </div>
                     </div>
                 </div>
+                
 
                 <div className="shop-products-list">
                     {isLoading ? (
@@ -262,7 +282,7 @@ export const Shop = () => {
                             <div className="products-grid">
                                 {productsDataLimited.map((product, index) => (
                                     <Product
-                                        key={product._id || index}
+                                        key={index}
                                         productName={product.name}
                                         productPrice={product.price}
                                         productDesc={product.description}
@@ -272,37 +292,35 @@ export const Shop = () => {
                                 ))}
                             </div>
 
-                            {pages > 1 && (
-                                <div className="pagination">
-                                    <button
-                                        className="pagination-btn prev"
-                                        onClick={handlePrevProductPage}
-                                        disabled={productPage === 0}
-                                    >
-                                        <FaChevronLeft /> Previous
-                                    </button>
-                                    
-                                    <div className="pagination-numbers">
-                                        {Array.from({ length: pages }, (_, i) => (
-                                            <button
-                                                key={i}
-                                                className={`pagination-btn ${productPage === i ? 'active' : ''}`}
-                                                onClick={() => handleProductPage(i)}
-                                            >
-                                                {i + 1}
-                                            </button>
-                                        ))}
-                                    </div>
-
-                                    <button
-                                        className="pagination-btn next"
-                                        onClick={handleNextProductPage}
-                                        disabled={productPage === pages - 1}
-                                    >
-                                        Next <FaChevronRight />
-                                    </button>
+                            <div className="pagination">
+                                <button
+                                    className="pagination-btn prev"
+                                    onClick={handlePrevProductPage}
+                                    disabled={productPage === 0}
+                                >
+                                    <FaChevronLeft /> Previous
+                                </button>
+                                
+                                <div className="pagination-numbers">
+                                    {Array.from({ length: pages }, (_, i) => (
+                                        <button
+                                            key={i}
+                                            className={`pagination-btn ${productPage === i ? 'active' : ''}`}
+                                            onClick={() => handleProductPage(i)}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    ))}
                                 </div>
-                            )}
+
+                                <button
+                                    className="pagination-btn next"
+                                    onClick={handleNextProductPage}
+                                    disabled={productPage === pages - 1}
+                                >
+                                    Next <FaChevronRight />
+                                </button>
+                            </div>
                         </>
                     )}
                 </div>

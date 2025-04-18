@@ -34,7 +34,7 @@ export const Cart = () => {
     };
 
     return (
-        <div 
+        <li 
             className="nav-icon-item"
             onMouseEnter={() => setIsOpen(true)}
             onMouseLeave={() => setIsOpen(false)}
@@ -127,6 +127,6 @@ export const Cart = () => {
                     </div>
                 )}
             </div>
-        </div>
+        </li>
     );
 }; 
