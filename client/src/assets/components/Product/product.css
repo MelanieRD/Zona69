@@ -145,3 +145,40 @@
     text-align: center;
     padding: 1rem;
 }
+
+.admin-actions {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 15px;
+    z-index: 2;
+}
+
+.edit-button,
+.delete-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-button svg,
+.delete-button svg {
+    width: 32px;
+    height: 32px;
+    color: rgba(0, 0, 0, 0.7);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: all 0.3s ease;
+}
+
+.edit-button:hover svg {
+    color: #2E7D32;
+    transform: scale(1.2);
+}
+
+.delete-button:hover svg {
+    color: #C62828;
+    transform: scale(1.2);
+}

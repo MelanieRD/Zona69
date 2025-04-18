@@ -17,14 +17,21 @@ export const Login = ({ isOpen, onClose }) => {
         setSuccess("");
 
         try {
+            console.log('Intentando iniciar sesión...');
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/app/auth/login`, {
                 username,
                 password
             });
 
+            console.log('Respuesta del servidor:', response.data);
+
             // Guardar el token en localStorage
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
+
+            console.log('Datos guardados en localStorage:');
+            console.log('Token:', localStorage.getItem('token'));
+            console.log('User:', localStorage.getItem('user'));
 
             // Mostrar mensaje de éxito
             setSuccess('¡Inicio de sesión exitoso!');
@@ -40,7 +47,9 @@ export const Login = ({ isOpen, onClose }) => {
             }, 2000);
 
         } catch (error) {
+            console.error('Error en el login:', error);
             if (error.response) {
+                console.error('Respuesta de error:', error.response.data);
                 setError(error.response.data.message || 'Error al iniciar sesión');
             } else {
                 setError('Error de conexión. Por favor, intenta de nuevo.');

@@ -4,7 +4,8 @@ import { Product } from "../../components/Product/Product";
 import { useContext, useEffect, useState } from "react";
 import { set } from "mongoose";
 import { getProductsWithLimit } from "../../utils/shopUtils";
-import { FaFilter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaFilter, FaChevronLeft, FaChevronRight, FaPlus } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export const Shop = () => {
     const [productPage, setProductPage] = useState(0);
@@ -12,6 +13,8 @@ export const Shop = () => {
     const [totalProducts, setTotalProducts] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const navigate = useNavigate();
    
     const productsPerPage = 6;
     const pages = Math.ceil(totalProducts / productsPerPage);
@@ -129,21 +132,55 @@ export const Shop = () => {
         getLimitNumOfProducts();
     }, [productPage, filters]);
 
+    useEffect(() => {
+        // Verificar si el usuario es administrador
+        const userData = localStorage.getItem('user');
+        if (userData) {
+            try {
+                const user = JSON.parse(userData);
+                setIsAdmin(user.role === 'admin' || user.role === 'superadmin');
+            } catch (error) {
+                console.error('Error parsing user data:', error);
+                setIsAdmin(false);
+            }
+        }
+    }, []);
+
+    const handleAddProduct = () => {
+        navigate('/product/new');
+    };
+
     return (
         <div className="shop-page">
             <div className="shop-header">
                 <br />
-                <button 
-                    className="filter-toggle"
-                    onClick={() => setIsFilterOpen(!isFilterOpen)}
-                >
-                    <FaFilter /> Filters
-                </button>
+                <div className="header-actions">
+                    
+                    <button 
+                        className="filter-toggle"
+                        onClick={() => setIsFilterOpen(!isFilterOpen)}
+                    >
+                        <FaFilter /> Filters
+                    </button>
+
+                    {isAdmin && (
+                        <button 
+                            className="add-product-button"
+                            onClick={handleAddProduct}
+                        >
+                            <FaPlus /> Add Product
+                        </button>
+                    )}
+                   
+                </div>
             </div>
 
             <div className="shop-container">
+                
+                
                 <div className={`shop-products-filters ${isFilterOpen ? 'open' : ''}`}>
                     <div className="filter-section">
+                        
                         <h5>Colores</h5>
                         <div className="section-filter colors-filter">
                             <div
@@ -204,6 +241,7 @@ export const Shop = () => {
                         </div>
                     </div>
                 </div>
+                
 
                 <div className="shop-products-list">
                     {isLoading ? (

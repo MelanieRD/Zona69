@@ -75,7 +75,7 @@ const login = async (req, res) => {
             return res.status(401).json({ message: 'Credenciales inválidas' });
         }
 
-        // Generar token JWT
+        // Generar token JWT con expiración de 24 horas
         const token = jwt.sign(
             { 
                 id: user._id,
