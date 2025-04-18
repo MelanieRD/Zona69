@@ -157,142 +157,220 @@ export const ProductDetail = () => {
                     </div>
                 )}
                 <div className="product-detail-grid">
-                    <div className="product-gallery">
-                        <div className="main-image">
-                            <img src={isEditing ? editedProduct.imageUrl : product.imageUrl} alt={product.name} />
-                        </div>
-                    </div>
-
-                    <div className="product-info">
-                        <div className="product-header">
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={editedProduct.name}
-                                    onChange={handleInputChange}
-                                    className="edit-input"
-                                />
-                            ) : (
-                                <h1 className="product-title">{product.name}</h1>
-                            )}
-                            <button 
-                                className={`favorite-btn ${isFavorite ? 'active' : ''}`}
-                                onClick={() => setIsFavorite(!isFavorite)}
-                            >
-                                <HiHeart />
-                            </button>
-                        </div>
-
-                        {isEditing ? (
-                            <input
-                                type="number"
-                                name="price"
-                                value={editedProduct.price}
-                                onChange={handleInputChange}
-                                className="edit-input"
-                            />
-                        ) : (
-                            <div className="product-price">${product.price}</div>
-                        )}
-
-                        {isEditing ? (
-                            <textarea
-                                name="description"
-                                value={editedProduct.description}
-                                onChange={handleInputChange}
-                                className="edit-textarea"
-                            />
-                        ) : (
-                            <div className="product-description">
-                                <p>{product.description}</p>
+                    {isEditing ? (
+                        <div className="edit-form full-width">
+                            <div className="edit-section">
+                                <h3>Información Básica</h3>
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>Nombre del Producto</label>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={editedProduct.name}
+                                            onChange={handleInputChange}
+                                            className="edit-input"
+                                            placeholder="Nombre del producto"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Precio</label>
+                                        <input
+                                            type="number"
+                                            name="price"
+                                            value={editedProduct.price}
+                                            onChange={handleInputChange}
+                                            className="edit-input"
+                                            placeholder="Precio"
+                                            min="0"
+                                            step="0.01"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>URL de la Imagen</label>
+                                    <input
+                                        type="url"
+                                        name="imageUrl"
+                                        value={editedProduct.imageUrl}
+                                        onChange={handleInputChange}
+                                        className="edit-input"
+                                        placeholder="URL de la imagen"
+                                    />
+                                    {editedProduct.imageUrl && (
+                                        <div className="image-preview">
+                                            <img src={editedProduct.imageUrl} alt="Vista previa" />
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        )}
 
-                        {product.size && product.size.length > 0 && (
-                            <div className="size-selector">
-                                <h3>Talla</h3>
+                            <div className="edit-section">
+                                <h3>Descripción y Características</h3>
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>Color</label>
+                                        <input
+                                            type="text"
+                                            name="color"
+                                            value={editedProduct.color}
+                                            onChange={handleInputChange}
+                                            className="edit-input"
+                                            placeholder="Color del producto"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Material</label>
+                                        <input
+                                            type="text"
+                                            name="material"
+                                            value={editedProduct.material}
+                                            onChange={handleInputChange}
+                                            className="edit-input"
+                                            placeholder="Material del producto"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>Descripción</label>
+                                    <textarea
+                                        name="description"
+                                        value={editedProduct.description}
+                                        onChange={handleInputChange}
+                                        className="edit-textarea"
+                                        placeholder="Descripción del producto"
+                                        rows="4"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="edit-section">
+                                <h3>Tallas Disponibles</h3>
                                 <div className="size-options">
-                                    {product.size.map((size) => (
+                                    {["One Size", "XS", "S", "M", "L"].map((size) => (
                                         <button
                                             key={size}
-                                            className={`size-option ${selectedSize === size ? 'selected' : ''}`}
-                                            onClick={() => handleSizeSelect(size)}
+                                            type="button"
+                                            className={`size-option ${editedProduct.size.includes(size) ? 'selected' : ''}`}
+                                            onClick={() => {
+                                                const newSizes = editedProduct.size.includes(size)
+                                                    ? editedProduct.size.filter(s => s !== size)
+                                                    : [...editedProduct.size.filter(s => s !== "One Size"), size];
+                                                setEditedProduct(prev => ({
+                                                    ...prev,
+                                                    size: newSizes
+                                                }));
+                                            }}
                                         >
                                             {size}
                                         </button>
                                     ))}
                                 </div>
                             </div>
-                        )}
 
-                        <div className="quantity-selector">
-                            <h3>Cantidad</h3>
-                            <input
-                                type="number"
-                                min="1"
-                                value={quantity}
-                                onChange={handleQuantityChange}
-                                className="quantity-input"
-                            />
-                        </div>
+                            <div className="edit-section">
+                                <h3>Categorías</h3>
+                                <div className="category-options">
+                                    {["Vibradores", "Lubricantes", "Accesorios", "Preservativos", "Inflables", "Juguetes", "Realistas", "Dildos", "Baterías", "Cremas", "Vaginas", "Masajeadores", "Consumibles"].map((category) => (
+                                        <button
+                                            key={category}
+                                            type="button"
+                                            className={`category-option ${editedProduct.categoryTags.includes(category) ? 'selected' : ''}`}
+                                            onClick={() => {
+                                                const newCategories = editedProduct.categoryTags.includes(category)
+                                                    ? editedProduct.categoryTags.filter(c => c !== category)
+                                                    : [...editedProduct.categoryTags, category];
+                                                setEditedProduct(prev => ({
+                                                    ...prev,
+                                                    categoryTags: newCategories
+                                                }));
+                                            }}
+                                        >
+                                            {category}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
 
-                        {!isEditing && (
-                            <button 
-                                className="add-to-cart-btn"
-                                onClick={handleAddToCart}
-                            >
-                                <HiShoppingCart /> Añadir al carrito
-                            </button>
-                        )}
-
-                        {isEditing && (
-                            <div className="edit-buttons">
-                                <button className="save-button" onClick={handleSave}>
-                                    Guardar cambios
-                                </button>
+                            <div className="edit-actions">
                                 <button className="cancel-button" onClick={handleCancel}>
                                     Cancelar
                                 </button>
+                                <button className="save-button" onClick={handleSave}>
+                                    Guardar Cambios
+                                </button>
                             </div>
-                        )}
+                        </div>
+                    ) : (
+                        <>
+                            <div className="product-gallery">
+                                <div className="main-image">
+                                    <img src={product.imageUrl} alt={product.name} />
+                                </div>
+                            </div>
+                            <div className="product-info">
+                                <div className="product-header">
+                                    <h1 className="product-title">{product.name}</h1>
+                                    <button 
+                                        className={`favorite-btn ${isFavorite ? 'active' : ''}`}
+                                        onClick={() => setIsFavorite(!isFavorite)}
+                                    >
+                                        <HiHeart />
+                                    </button>
+                                </div>
 
-                        <div className="product-details">
-                            <h3>Detalles del producto</h3>
-                            <ul>
-                                {isEditing ? (
-                                    <>
-                                        <li>
-                                            <strong>Color:</strong>
-                                            <input
-                                                type="text"
-                                                name="color"
-                                                value={editedProduct.color}
-                                                onChange={handleInputChange}
-                                                className="edit-input"
-                                            />
-                                        </li>
-                                        <li>
-                                            <strong>Material:</strong>
-                                            <input
-                                                type="text"
-                                                name="material"
-                                                value={editedProduct.material}
-                                                onChange={handleInputChange}
-                                                className="edit-input"
-                                            />
-                                        </li>
-                                    </>
-                                ) : (
-                                    <>
+                                <div className="product-price">${product.price}</div>
+
+                                <div className="product-description">
+                                    <p>{product.description}</p>
+                                </div>
+
+                                {product.size && product.size.length > 0 && (
+                                    <div className="size-selector">
+                                        <h3>Talla</h3>
+                                        <div className="size-options">
+                                            {product.size.map((size) => (
+                                                <button
+                                                    key={size}
+                                                    className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+                                                    onClick={() => handleSizeSelect(size)}
+                                                >
+                                                    {size}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className="quantity-selector">
+                                    <h3>Cantidad</h3>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        value={quantity}
+                                        onChange={handleQuantityChange}
+                                        className="quantity-input"
+                                    />
+                                </div>
+
+                                <button 
+                                    className="add-to-cart-btn"
+                                    onClick={handleAddToCart}
+                                >
+                                    <HiShoppingCart /> Añadir al carrito
+                                </button>
+
+                                <div className="product-details">
+                                    <h3>Detalles del producto</h3>
+                                    <ul>
                                         <li><strong>Color:</strong> {product.color}</li>
                                         <li><strong>Material:</strong> {product.material || "Not specified"}</li>
                                         <li><strong>Categoria:</strong> {product.categoryTags?.join(", ") || "Not specified"}</li>
-                                    </>
-                                )}
-                            </ul>
-                        </div>
-                    </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

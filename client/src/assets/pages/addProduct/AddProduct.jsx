@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiX } from "react-icons/hi";
 import "./addProduct.css";
@@ -12,7 +12,7 @@ export const AddProduct = () => {
         imageUrl: "",
         color: "none",
         material: "",
-        sizes: [],
+        size: ["One Size"],
         categoryTags: [],
     });
 
@@ -45,12 +45,23 @@ export const AddProduct = () => {
     };
 
     const handleSizeChange = (size) => {
-        setFormData(prev => ({
-            ...prev,
-            sizes: prev.sizes.includes(size)
-                ? prev.sizes.filter(s => s !== size)
-                : [...prev.sizes, size]
-        }));
+        setFormData(prev => {
+            let newSizes;
+            
+            if (size === "One Size") {
+                newSizes = ["One Size"];
+            } else {
+                newSizes = prev.size.includes(size)
+                    ? prev.size.filter(s => s !== size)
+                    : [...prev.size.filter(s => s !== "One Size"), size];
+            }
+
+            console.log("Nuevas tallas seleccionadas:", newSizes);
+            return {
+                ...prev,
+                size: newSizes
+            };
+        });
     };
 
     const handleCategoryChange = (category) => {
@@ -65,19 +76,37 @@ export const AddProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            console.log("Datos del formulario antes de enviar:", formData);
+            
+            // Asegurarse de que al menos una talla esté seleccionada
+            if (!formData.size || formData.size.length === 0) {
+                alert('Por favor, selecciona al menos una talla');
+                return;
+            }
+
+            // Preparar los datos para enviar
+            const dataToSend = {
+                ...formData,
+                size: formData.size.join(',')
+            };
+
+            console.log("Datos a enviar al backend:", dataToSend);
+
             const response = await fetch(`${import.meta.env.VITE_API_URL}/app/products`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(dataToSend)
             });
 
             if (response.ok) {
                 navigate('/shop');
             } else {
-                alert('Error al crear el producto');
+                const errorData = await response.json();
+                console.error("Error del servidor:", errorData);
+                alert(errorData.message || 'Error al crear el producto');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -94,6 +123,16 @@ export const AddProduct = () => {
             handleClose();
         }
     };
+
+    // Asegurarse de que el estado inicial tenga "One Size" seleccionado
+    useEffect(() => {
+        if (!formData.size || formData.size.length === 0) {
+            setFormData(prev => ({
+                ...prev,
+                size: ["One Size"]
+            }));
+        }
+    }, []);
 
     return (
         <div className="modal-overlay" onClick={handleModalClick}>
@@ -191,7 +230,7 @@ export const AddProduct = () => {
                                 <button
                                     key={size}
                                     type="button"
-                                    className={`option-button ${formData.sizes.includes(size) ? 'selected' : ''}`}
+                                    className={`option-button ${formData.size.includes(size) ? 'selected' : ''}`}
                                     onClick={() => handleSizeChange(size)}
                                 >
                                     {size}

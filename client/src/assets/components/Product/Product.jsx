@@ -85,12 +85,7 @@ export const Product = ({addClass, productName, productDesc, productPrice, imgSr
                     {hideHeartIcon ? "" : <HiHeart className="icon-product"/>}
                     {isAdmin && (
                         <div className="admin-actions">
-                            <button 
-                                className="edit-button"
-                                onClick={handleEditClick}
-                            >
-                                <HiPencil />
-                            </button>
+                            
                             <button 
                                 className="delete-button"
                                 onClick={handleDeleteClick}
