@@ -35,6 +35,7 @@ export const Shop = () => {
     ];
 
     const sizes = [
+        { sizeName: "One Size", sizeDatabaseValue: "one size" },
         { sizeName: "XS", sizeDatabaseValue: "XS" },
         { sizeName: "S", sizeDatabaseValue: "S" },
         { sizeName: "M", sizeDatabaseValue: "M" },

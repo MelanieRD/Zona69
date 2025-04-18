@@ -10,18 +10,30 @@ export const AddProduct = () => {
         price: "",
         description: "",
         imageUrl: "",
-        color: "",
+        color: "none",
         material: "",
         sizes: [],
         categoryTags: [],
-        stock: ""
     });
 
-    const availableSizes = ["XS", "S", "M", "L"];
+    const availableSizes = ["One Size", "XS", "S", "M", "L"];
     const availableCategories = [
         "Vibradores", "Lubricantes", "Accesorios", "Preservativos",
         "Inflables", "Juguetes", "Realistas", "Dildos", "Baterías",
         "Cremas", "Vaginas", "Masajeadores", "Consumibles"
+    ];
+
+    const availableColors = [
+        { colorCss: "none", colorDatabaseValue: "none", label: "None" },
+        { colorCss: "white", colorDatabaseValue: "blanco", label: "White" },
+        { colorCss: "gray", colorDatabaseValue: "gris", label: "Gray" },
+        { colorCss: "black", colorDatabaseValue: "negro", label: "Black" },
+        { colorCss: "red", colorDatabaseValue: "red", label: "Red" },
+        { colorCss: "blue", colorDatabaseValue: "azul", label: "Blue" },
+        { colorCss: "green", colorDatabaseValue: "Green", label: "Green" },
+        { colorCss: "yellow", colorDatabaseValue: "yellow", label: "Yellow" },
+        { colorCss: "brown", colorDatabaseValue: "brown", label: "Brown" },
+        { colorCss: "purple", colorDatabaseValue: "Grape", label: "Purple" },
     ];
 
     const handleChange = (e) => {
@@ -144,32 +156,6 @@ export const AddProduct = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Stock</label>
-                            <input
-                                type="number"
-                                name="stock"
-                                value={formData.stock}
-                                onChange={handleChange}
-                                required
-                                min="0"
-                                placeholder="0"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        <div className="form-group">
-                            <label>Color</label>
-                            <input
-                                type="text"
-                                name="color"
-                                value={formData.color}
-                                onChange={handleChange}
-                                required
-                                placeholder="Ej: Negro, Rojo, etc."
-                            />
-                        </div>
-                        <div className="form-group">
                             <label>Material</label>
                             <input
                                 type="text"
@@ -179,6 +165,22 @@ export const AddProduct = () => {
                                 required
                                 placeholder="Ej: Silicona, Metal, etc."
                             />
+                        </div>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Color</label>
+                        <div className="color-options">
+                            {availableColors.map(({ colorCss, colorDatabaseValue, label }) => (
+                                <button
+                                    key={colorDatabaseValue}
+                                    type="button"
+                                    className={`color-button ${formData.color === colorDatabaseValue ? 'selected' : ''}`}
+                                    style={{ backgroundColor: colorCss === 'none' ? 'transparent' : colorCss }}
+                                    onClick={() => setFormData(prev => ({ ...prev, color: colorDatabaseValue }))}
+                                    title={label}
+                                />
+                            ))}
                         </div>
                     </div>
 
