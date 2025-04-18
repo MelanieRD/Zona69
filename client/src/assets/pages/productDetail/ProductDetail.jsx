@@ -130,6 +130,32 @@ export const ProductDetail = () => {
         }));
     };
 
+    const handleDelete = async () => {
+        if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/app/products/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error al eliminar el producto');
+                }
+
+                // Redirigir a la página de Shop
+                navigate('/shop');
+                
+                // Disparar un evento personalizado para actualizar la lista de productos
+                window.dispatchEvent(new CustomEvent('productsUpdated'));
+            } catch (error) {
+                console.error('Error al eliminar:', error);
+                alert('Error al eliminar el producto');
+            }
+        }
+    };
+
     if (loading) {
         return <div className="loading-spinner">Loading...</div>;
     }
