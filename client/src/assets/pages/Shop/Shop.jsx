@@ -154,15 +154,17 @@ export const Shop = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/app/products`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/app/products/all`);
                 if (!response.ok) {
                     throw new Error('Error al cargar los productos');
                 }
                 const data = await response.json();
-                setProductsDataLimited(data.products);
-                setTotalProducts(data.totalProducts);
+                setProductsDataLimited(data);
+                setTotalProducts(data.length);
             } catch (error) {
                 console.error('Error:', error);
+                setProductsDataLimited([]);
+                setTotalProducts(0);
             }
         };
 
