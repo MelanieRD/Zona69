@@ -1,4 +1,4 @@
-import { HiHeart, HiPencil, HiTrash } from "react-icons/hi";
+import { HiHeart, HiTrash } from "react-icons/hi";
 import { Button } from "../Button/Button";
 import "./product.css";
 import { useEffect, useState } from "react";
@@ -34,11 +34,6 @@ export const Product = ({addClass, productName, productDesc, productPrice, imgSr
         if (id) {
             navigate(`/product/${id}`);
         }
-    };
-
-    const handleEditClick = (e) => {
-        e.stopPropagation();
-        navigate(`/product/${id}/edit`);
     };
 
     const handleDeleteClick = async (e) => {
@@ -79,7 +74,7 @@ export const Product = ({addClass, productName, productDesc, productPrice, imgSr
                 <div className="product-image">
                     {!imageError ? (
                         <img 
-                            src={imgSrc} 
+                            src={imgSrc || 'https://via.placeholder.com/300x300?text=No+Image'} 
                             alt={productName || "product"} 
                             onError={handleImageError}
                         />
@@ -91,7 +86,6 @@ export const Product = ({addClass, productName, productDesc, productPrice, imgSr
                     {hideHeartIcon ? "" : <HiHeart className="icon-product"/>}
                     {isAdmin && (
                         <div className="admin-actions">
-                            
                             <button 
                                 className="delete-button"
                                 onClick={handleDeleteClick}
