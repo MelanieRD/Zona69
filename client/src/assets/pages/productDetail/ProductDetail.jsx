@@ -37,7 +37,7 @@ export const ProductDetail = () => {
     }, []);
 
     const handleBack = () => {
-        navigate(-1);
+        navigate('/shop', { replace: true });
     };
 
     const handleOverlayClick = (e) => {
@@ -50,14 +50,17 @@ export const ProductDetail = () => {
         const fetchProduct = async () => {
             try {
                 setLoading(true);
+                setError(null);
                 const data = await getProductById(id);
-                if (!data) {
+                
+                if (!data || data.error) {
                     setError("Producto no encontrado");
                     setTimeout(() => {
-                        navigate('/shop');
+                        navigate('/shop', { replace: true });
                     }, 2000);
                     return;
                 }
+                
                 setProduct(data);
                 setEditedProduct(data);
                 if (data.size && data.size.length > 0) {
@@ -67,7 +70,7 @@ export const ProductDetail = () => {
                 console.error("Error fetching product:", error);
                 setError("Error al cargar el producto");
                 setTimeout(() => {
-                    navigate('/shop');
+                    navigate('/shop', { replace: true });
                 }, 2000);
             } finally {
                 setLoading(false);
@@ -107,7 +110,6 @@ export const ProductDetail = () => {
 
     const handleSave = async () => {
         try {
-            // Aquí iría la lógica para guardar los cambios en el backend
             const response = await fetch(`${import.meta.env.VITE_API_URL}/app/products/${id}`, {
                 method: 'PUT',
                 headers: {
@@ -126,7 +128,10 @@ export const ProductDetail = () => {
             setIsEditing(false);
         } catch (error) {
             console.error('Error al guardar:', error);
-            alert('Error al guardar los cambios');
+            setError('Error al guardar los cambios');
+            setTimeout(() => {
+                navigate('/shop', { replace: true });
+            }, 2000);
         }
     };
 
@@ -174,7 +179,7 @@ export const ProductDetail = () => {
             <div className="product-detail-container" onClick={e => e.stopPropagation()}>
                 <div className="product-detail-header">
                     <button className="back-button" onClick={handleBack}>
-                        <HiArrowLeft /> Regresar
+                        <HiArrowLeft /> Volver a la tienda
                     </button>
                     {isAdmin && !isEditing && (
                         <button className="edit-button" onClick={handleEdit}>
@@ -184,7 +189,7 @@ export const ProductDetail = () => {
                 </div>
                 {showAddedMessage && (
                     <div className="added-to-cart-message">
-                        Añadido al carrito correctamente!
+                        ¡Añadido al carrito correctamente!
                     </div>
                 )}
                 <div className="product-detail-grid">
