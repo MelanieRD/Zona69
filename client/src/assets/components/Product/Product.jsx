@@ -4,9 +4,10 @@ import "./product.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const Product = ({addClass, productName, productDesc, productPrice, imgSrc, buttonTxt, hideHeartIcon, id }) => {
+export const Product = ({addClass, productName, productDesc, productPrice, imgSrc, buttonTxt, hideHeartIcon, id, onProductDeleted }) => {
     const [imageError, setImageError] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -42,24 +43,29 @@ export const Product = ({addClass, productName, productDesc, productPrice, imgSr
 
     const handleDeleteClick = async (e) => {
         e.stopPropagation();
-        if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-            try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/app/products/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    }
-                });
+        setShowDeleteModal(true);
+    };
 
-                if (response.ok) {
-                    window.location.reload();
-                } else {
-                    alert('Error al eliminar el producto');
+    const confirmDelete = async () => {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/app/products/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
-            } catch (error) {
-                console.error('Error:', error);
+            });
+
+            if (response.ok) {
+                if (onProductDeleted) {
+                    onProductDeleted(id);
+                }
+                setShowDeleteModal(false);
+            } else {
                 alert('Error al eliminar el producto');
             }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al eliminar el producto');
         }
     };
 
@@ -102,6 +108,29 @@ export const Product = ({addClass, productName, productDesc, productPrice, imgSr
                     <p className="product-price">{productPrice}</p>
                 </div>
             </div>
+
+            {showDeleteModal && (
+                <div className="delete-modal-overlay">
+                    <div className="delete-modal">
+                        <h3>¿Estás seguro?</h3>
+                        <p>Esta acción eliminará el producto "{productName}" permanentemente.</p>
+                        <div className="delete-modal-buttons">
+                            <button 
+                                className="delete-modal-cancel"
+                                onClick={() => setShowDeleteModal(false)}
+                            >
+                                Cancelar
+                            </button>
+                            <button 
+                                className="delete-modal-confirm"
+                                onClick={confirmDelete}
+                            >
+                                Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
