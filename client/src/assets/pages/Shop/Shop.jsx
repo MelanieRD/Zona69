@@ -24,6 +24,12 @@ export const Shop = () => {
             prevProducts.filter(product => product._id !== deletedProductId)
         );
         setTotalProducts(prev => prev - 1);
+
+        if (productsDataLimited.length === 1 && productPage > 0) {
+            setProductPage(prev => prev - 1);
+        } else {
+            getLimitNumOfProducts();
+        }
     };
 
     // FILTERS 
@@ -266,9 +272,9 @@ export const Shop = () => {
                     ) : (
                         <>
                             <div className="products-grid">
-                                {productsDataLimited.slice(0, productsPerPage).map((product, index) => (
+                                {productsDataLimited.map((product, index) => (
                                     <Product
-                                        key={index}
+                                        key={product._id}
                                         productName={product.name}
                                         productPrice={product.price}
                                         productDesc={product.description}
@@ -279,7 +285,7 @@ export const Shop = () => {
                                 ))}
                             </div>
 
-                            {pages > 1 && (
+                            {totalProducts > 0 && (
                                 <div className="pagination">
                                     <button
                                         className="pagination-btn prev"
