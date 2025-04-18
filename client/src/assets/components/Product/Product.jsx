@@ -30,6 +30,12 @@ export const Product = ({addClass, productName, productDesc, productPrice, imgSr
         setImageError(true);
     };
 
+    const getImageUrl = () => {
+        if (!imgSrc) return 'https://placehold.co/600x400?text=No+Image';
+        if (imgSrc.startsWith('http')) return imgSrc;
+        return `${import.meta.env.VITE_API_URL}${imgSrc}`;
+    };
+
     const handleProductClick = () => {
         if (id) {
             navigate(`/product/${id}`);
@@ -74,7 +80,7 @@ export const Product = ({addClass, productName, productDesc, productPrice, imgSr
                 <div className="product-image">
                     {!imageError ? (
                         <img 
-                            src={imgSrc || 'https://via.placeholder.com/300x300?text=No+Image'} 
+                            src={getImageUrl()} 
                             alt={productName || "product"} 
                             onError={handleImageError}
                         />
