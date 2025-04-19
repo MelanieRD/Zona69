@@ -553,6 +553,8 @@
 .header-actions {
     margin-top: 4rem;
     display: flex;
+    justify-content: flex-end;
+    width: 90vw;
     gap: 1rem;
     align-items: center;
     padding: 0 1rem;
