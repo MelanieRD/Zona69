@@ -1,0 +1,58 @@
+.scroll-animation-container {
+    opacity: 0;
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    will-change: transform, opacity;
+}
+
+.scroll-animation-container.visible {
+    opacity: 1;
+}
+
+.scroll-animation-container.up {
+    transform: translateY(30px);
+}
+
+.scroll-animation-container.up.visible {
+    transform: translateY(0);
+}
+
+.scroll-animation-container.down {
+    transform: translateY(-30px);
+}
+
+.scroll-animation-container.down.visible {
+    transform: translateY(0);
+}
+
+.scroll-animation-container.left {
+    transform: translateX(30px);
+}
+
+.scroll-animation-container.left.visible {
+    transform: translateX(0);
+}
+
+.scroll-animation-container.right {
+    transform: translateX(-30px);
+}
+
+.scroll-animation-container.right.visible {
+    transform: translateX(0);
+}
+
+/* Optimizations for Mobile */
+@media (max-width: 768px) {
+    .scroll-animation-container {
+        transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    }
+
+    .scroll-animation-container.up,
+    .scroll-animation-container.down {
+        transform: translateY(20px);
+    }
+
+    .scroll-animation-container.left,
+    .scroll-animation-container.right {
+        transform: translateX(20px);
+    }
+} 

@@ -1,61 +1,43 @@
-import React from 'react';
-import { useSpring, animated } from '@react-spring/web';
-import { useInView } from 'react-intersection-observer';
+import { useEffect, useRef, useState } from "react";
+import "./ScrollAnimation.css";
 
-export const ScrollAnimation = ({ children, delay = 0, direction = 'up' }) => {
-    const [ref, inView] = useInView({
-        threshold: 0.2,
-        triggerOnce: true
-    });
+export const ScrollAnimation = ({ children, direction = "up", delay = 0 }) => {
+    const [isVisible, setIsVisible] = useState(false);
+    const elementRef = useRef(null);
 
-    const getTransform = () => {
-        switch(direction) {
-            case 'up':
-                return 'translateY(100px)';
-            case 'down':
-                return 'translateY(-100px)';
-            case 'left':
-                return 'translateX(100px)';
-            case 'right':
-                return 'translateX(-100px)';
-            default:
-                return 'translateY(100px)';
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        setIsVisible(true);
+                    }, delay);
+                }
+            },
+            {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            }
+        );
+
+        const currentElement = elementRef.current;
+        if (currentElement) {
+            observer.observe(currentElement);
         }
-    };
 
-    const getFinalTransform = () => {
-        switch(direction) {
-            case 'up':
-            case 'down':
-                return 'translateY(0)';
-            case 'left':
-            case 'right':
-                return 'translateX(0)';
-            default:
-                return 'translateY(0)';
-        }
-    };
-
-    const animation = useSpring({
-        opacity: inView ? 1 : 0,
-        transform: inView ? getFinalTransform() : getTransform(),
-        config: {
-            tension: 100,
-            friction: 30,
-            mass: 1.5
-        },
-        delay: delay
-    });
+        return () => {
+            if (currentElement) {
+                observer.unobserve(currentElement);
+            }
+        };
+    }, [delay]);
 
     return (
-        <animated.div 
-            ref={ref} 
-            style={{
-                ...animation,
-                willChange: 'transform, opacity'
-            }}
+        <div
+            ref={elementRef}
+            className={`scroll-animation-container ${isVisible ? "visible" : ""} ${direction}`}
         >
             {children}
-        </animated.div>
+        </div>
     );
 }; 
