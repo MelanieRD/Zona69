@@ -60,7 +60,7 @@ export const Shop = () => {
 
     const categories = [
         { CategoryName: "Vibradores", CategoryDatabaseValue: "Vibrador" },
-        { CategoryName: "Lubricantes", CategoryDatabaseValue: "Lubricante" },
+        { CategoryName: "Lubricantes", CategoryDatabaseValue: "Lubricador" },
         { CategoryName: "Accesorios", CategoryDatabaseValue: "Accesorio" },
         { CategoryName: "Preservativos", CategoryDatabaseValue: "Preservativos" },
         { CategoryName: "Inflables", CategoryDatabaseValue: "Inflable" },
