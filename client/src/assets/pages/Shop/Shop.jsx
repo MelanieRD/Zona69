@@ -135,13 +135,13 @@ export const Shop = () => {
 
     const handlePrevProductPage = () => {
         if (productPage > 0) {
-            setProductPage(productPage - 1);
+            setProductPage(prev => prev - 1);
         }
     };
 
     const handleNextProductPage = () => {
         if (productPage < pages - 1) {
-            setProductPage(productPage + 1);
+            setProductPage(prev => prev + 1);
         }
     };
 
@@ -152,6 +152,12 @@ export const Shop = () => {
             getLimitNumOfProducts();
         }
     }, []);
+
+    useEffect(() => {
+        if (isAgeVerified) {
+            getLimitNumOfProducts();
+        }
+    }, [productPage, filters, isAgeVerified]);
 
     useEffect(() => {
         // Verificar si el usuario es administrador
@@ -282,7 +288,7 @@ export const Shop = () => {
                     ) : productsDataLimited.length > 0 ? (
                         <>
                             <div className="products-grid">
-                                {productsDataLimited.map((product, index) => (
+                                {productsDataLimited.map((product) => (
                                     <Product
                                         key={product._id}
                                         productName={product.name}
@@ -295,37 +301,35 @@ export const Shop = () => {
                                 ))}
                             </div>
 
-                            {pages > 1 && (
-                                <div className="pagination">
-                                    <button
-                                        className="pagination-btn prev"
-                                        onClick={handlePrevProductPage}
-                                        disabled={productPage === 0}
-                                    >
-                                        <FaChevronLeft /> Previous
-                                    </button>
-                                    
-                                    <div className="pagination-numbers">
-                                        {Array.from({ length: pages }, (_, i) => (
-                                            <button
-                                                key={i}
-                                                className={`pagination-btn ${productPage === i ? 'active' : ''}`}
-                                                onClick={() => handleProductPage(i)}
-                                            >
-                                                {i + 1}
-                                            </button>
-                                        ))}
-                                    </div>
-
-                                    <button
-                                        className="pagination-btn next"
-                                        onClick={handleNextProductPage}
-                                        disabled={productPage === pages - 1}
-                                    >
-                                        Next <FaChevronRight />
-                                    </button>
+                            <div className="pagination">
+                                <button
+                                    className="pagination-btn prev"
+                                    onClick={handlePrevProductPage}
+                                    disabled={productPage === 0}
+                                >
+                                    <FaChevronLeft /> Previous
+                                </button>
+                                
+                                <div className="pagination-numbers">
+                                    {Array.from({ length: pages }, (_, i) => (
+                                        <button
+                                            key={i}
+                                            className={`pagination-btn ${productPage === i ? 'active' : ''}`}
+                                            onClick={() => handleProductPage(i)}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    ))}
                                 </div>
-                            )}
+
+                                <button
+                                    className="pagination-btn next"
+                                    onClick={handleNextProductPage}
+                                    disabled={productPage === pages - 1}
+                                >
+                                    Next <FaChevronRight />
+                                </button>
+                            </div>
                         </>
                     ) : (
                         <div className="no-products">No products found</div>
