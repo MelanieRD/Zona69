@@ -2,24 +2,23 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AgeVerification.css';
 
-export const AgeVerification = () => {
-    const [isVerified, setIsVerified] = useState(false);
+export const AgeVerification = ({ onVerified }) => {
     const [showModal, setShowModal] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         const verified = localStorage.getItem('ageVerified');
         if (verified === 'true') {
-            setIsVerified(true);
             setShowModal(false);
+            if (onVerified) onVerified();
         }
-    }, []);
+    }, [onVerified]);
 
     const handleVerification = (isAdult) => {
         if (isAdult) {
             localStorage.setItem('ageVerified', 'true');
-            setIsVerified(true);
             setShowModal(false);
+            if (onVerified) onVerified();
         } else {
             navigate('/');
         }

@@ -15,6 +15,7 @@ export const Shop = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isAgeVerified, setIsAgeVerified] = useState(false);
     const navigate = useNavigate();
    
     const productsPerPage = 6;
@@ -145,8 +146,12 @@ export const Shop = () => {
     };
 
     useEffect(() => {
-        getLimitNumOfProducts();
-    }, [productPage, filters]);
+        const verified = localStorage.getItem('ageVerified');
+        if (verified === 'true') {
+            setIsAgeVerified(true);
+            getLimitNumOfProducts();
+        }
+    }, []);
 
     useEffect(() => {
         // Verificar si el usuario es administrador
@@ -179,9 +184,12 @@ export const Shop = () => {
         };
     }, [productPage, filters]);
 
+    if (!isAgeVerified) {
+        return <AgeVerification onVerified={() => setIsAgeVerified(true)} />;
+    }
+
     return (
         <div className="shop-page">
-            <AgeVerification />
             <div className="shop-header">
                 <br />
                 <div className="header-actions">
@@ -271,7 +279,7 @@ export const Shop = () => {
                 <div className="shop-products-list">
                     {isLoading ? (
                         <div className="loading-spinner">Loading...</div>
-                    ) : (
+                    ) : productsDataLimited.length > 0 ? (
                         <>
                             <div className="products-grid">
                                 {productsDataLimited.map((product, index) => (
@@ -287,7 +295,7 @@ export const Shop = () => {
                                 ))}
                             </div>
 
-                            {totalProducts > 0 && (
+                            {pages > 1 && (
                                 <div className="pagination">
                                     <button
                                         className="pagination-btn prev"
@@ -319,6 +327,8 @@ export const Shop = () => {
                                 </div>
                             )}
                         </>
+                    ) : (
+                        <div className="no-products">No products found</div>
                     )}
                 </div>
             </div>
