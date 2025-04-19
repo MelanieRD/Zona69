@@ -6,6 +6,7 @@ import { Newsletter } from "../../components/Newsletter/Newsletter"
 import { Collections } from "../../components/Collections/Collections"
 import AboutStore from "../../components/AboutStore/AboutStore"
 import { ScrollAnimation } from "../../components/ScrollAnimation/ScrollAnimation"
+import { AgeVerification } from "../../components/AgeVerification/AgeVerification"
 import "./home.css"
 //changed al readyy
 
@@ -31,6 +32,7 @@ export const Home = ()=>{
 
     return (
         <main className="home-page">
+            <AgeVerification />
             <section className="hero-section">
                 <Carousel imgsURLS={carouselImages}/>
             </section>

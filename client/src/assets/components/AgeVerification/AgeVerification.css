@@ -1,0 +1,129 @@
+.age-verification-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.age-verification-content {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 16px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.age-verification-content h2 {
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.age-verification-content p {
+    color: #666;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.verification-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.confirm-button,
+.deny-button {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-weight: 500;
+}
+
+.confirm-button {
+    background-color: #1a1a1a;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.confirm-button:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.deny-button {
+    background-color: #f8f9fa;
+    color: #1a1a1a;
+    border: 1px solid #ddd;
+}
+
+.deny-button:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .age-verification-content {
+        padding: 2rem;
+    }
+
+    .age-verification-content h2 {
+        font-size: 1.75rem;
+    }
+
+    .age-verification-content p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .age-verification-content {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
+    .age-verification-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .verification-buttons {
+        gap: 1rem;
+    }
+
+    .confirm-button,
+    .deny-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+} 

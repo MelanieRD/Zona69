@@ -6,6 +6,7 @@ import { set } from "mongoose";
 import { getProductsWithLimit } from "../../utils/shopUtils";
 import { FaFilter, FaChevronLeft, FaChevronRight, FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { AgeVerification } from "../../components/AgeVerification/AgeVerification";
 
 export const Shop = () => {
     const [productPage, setProductPage] = useState(0);
@@ -180,6 +181,7 @@ export const Shop = () => {
 
     return (
         <div className="shop-page">
+            <AgeVerification />
             <div className="shop-header">
                 <br />
                 <div className="header-actions">
