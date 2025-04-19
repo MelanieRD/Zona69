@@ -551,6 +551,7 @@
 }
 
 .header-actions {
+    margin-top: 4rem;
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -561,7 +562,6 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 3rem;
     padding: 0.5rem 1rem;
     background-color: #2E7D32;
     color: white;
